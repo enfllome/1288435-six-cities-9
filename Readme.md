@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
-* Студент: [Евгений Джораев](https://up.htmlacademy.ru/react/9/user/1288435).
-* Наставник: `Неизвестно`.
+- Студент: [Евгений Джораев](https://up.htmlacademy.ru/react/9/user/1288435).
+- Наставник: [Максим Кузнецов](https://htmlacademy.ru/profile/knenkne).
 
 ---
 
