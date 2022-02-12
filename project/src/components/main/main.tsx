@@ -4,6 +4,48 @@ type MainProps = {
   offersCount: number
 };
 
+type LocationItemProps = {
+  id?: string;
+  name: string;
+};
+
+const Locations: Array<LocationItemProps> = [
+  {
+    id: '0',
+    name: 'Paris',
+  },
+  {
+    id: '1',
+    name: 'Cologne',
+  },
+  {
+    id: '2',
+    name: 'Brussels',
+  },
+  {
+    id: '3',
+    name: 'Amsterdam',
+  },
+  {
+    id: '4',
+    name: 'Hamburg',
+  },
+  {
+    id: '5',
+    name: 'Dusseldorf',
+  },
+];
+
+function LocationItem ({ name, id }: LocationItemProps ): JSX.Element {
+  return (
+    <li className="locations__item">
+      <a className="locations__item-link tabs__item" href="#">
+        <span>{ name }</span>
+      </a>
+    </li>
+  );
+}
+
 function Main({ offersCount }: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
@@ -40,36 +82,11 @@ function Main({ offersCount }: MainProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              {
+                Locations.map((item) => (
+                  <LocationItem key={item.id}  name={item.name}/>
+                ))
+              }
             </ul>
           </section>
         </div>
