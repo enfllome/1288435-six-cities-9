@@ -5,7 +5,7 @@ type MainProps = {
 };
 
 type LocationItemProps = {
-  id?: string;
+  id: string;
   name: string;
 };
 
@@ -83,8 +83,8 @@ function Main({ offersCount }: MainProps): JSX.Element {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               {
-                Locations.map((item) => (
-                  <LocationItem key={item.id}  name={item.name}/>
+                Locations.map(({id, name}) => (
+                  <LocationItem key={id} id={id} name={name}/>
                 ))
               }
             </ul>
