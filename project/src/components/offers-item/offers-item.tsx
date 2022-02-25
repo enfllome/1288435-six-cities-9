@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import Offer from '../../types/offers';
 
-function OfferItem ({ price, title, type, previewImage }: Offer): JSX.Element {
+function OfferItem ({ price, title, type, previewImage, id }: Offer): JSX.Element {
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
@@ -35,7 +37,7 @@ function OfferItem ({ price, title, type, previewImage }: Offer): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{ title }</a>
+          <Link to={`${AppRoute.Room}${id}`}>{ title }</Link>
         </h2>
         <p className="place-card__type">{ type }</p>
       </div>
