@@ -1,6 +1,6 @@
 import Offer from '../../types/offers';
 import Header from '../header/header';
-import OfferItem from '../offers-item/offers-item';
+import OffersList from '../offers-list/offers-list';
 
 
 type MainProps = {
@@ -50,9 +50,6 @@ function LocationItem ({ name, id }: LocationItemProps ): JSX.Element {
 }
 
 function Main({ offers }: MainProps): JSX.Element {
-  // const { id, price, title, type } = offers;
-  // eslint-disable-next-line no-console
-  console.log(offers);
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -89,13 +86,7 @@ function Main({ offers }: MainProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {
-                  offers.map((offer) => (
-                    <OfferItem key={offer.id} previewImage={offer.previewImage} price={offer.price} title={offer.title} type={offer.type}/>
-                  ))
-                }
-              </div>
+              <OffersList offers={offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
