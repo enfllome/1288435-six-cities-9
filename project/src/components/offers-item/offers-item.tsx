@@ -2,7 +2,11 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Offer from '../../types/offers';
 
-function OfferItem ({ price, title, type, previewImage, id }: Offer): JSX.Element {
+type OfferItemProps = {
+  updateData: () => string;
+}
+
+function OfferItem ({ price, title, type, previewImage, id }: Offer, updateData: OfferItemProps): JSX.Element {
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
