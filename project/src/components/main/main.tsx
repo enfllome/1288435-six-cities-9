@@ -1,8 +1,10 @@
+import Offer from '../../types/offers';
 import Header from '../header/header';
 import OfferItem from '../offers-item/offers-item';
 
+
 type MainProps = {
-  offersCount: number
+  offers: Array<Offer>,
 };
 
 type LocationItemProps = {
@@ -47,7 +49,10 @@ function LocationItem ({ name, id }: LocationItemProps ): JSX.Element {
   );
 }
 
-function Main({ offersCount }: MainProps): JSX.Element {
+function Main({ offers }: MainProps): JSX.Element {
+  // const { id, price, title, type } = offers;
+  // eslint-disable-next-line no-console
+  console.log(offers);
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -68,7 +73,7 @@ function Main({ offersCount }: MainProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{ offersCount } places to stay in Amsterdam</b>
+              <b className="places__found">{ offers.length } places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by </span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -85,11 +90,11 @@ function Main({ offersCount }: MainProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OfferItem />
-                <OfferItem />
-                <OfferItem />
-                <OfferItem />
-                <OfferItem />
+                {
+                  offers.map((offer) => (
+                    <OfferItem key={offer.id} previewImage={offer.previewImage} price={offer.price} title={offer.title} type={offer.type}/>
+                  ))
+                }
               </div>
             </section>
             <div className="cities__right-section">

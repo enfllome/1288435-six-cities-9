@@ -6,18 +6,19 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
+import Offer from '../../types/offers';
 
 type AppProps = {
-  offersCount: number,
+  offers: Array<Offer>,
 };
 
-function App({ offersCount }: AppProps): JSX.Element {
+function App({ offers }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<Main offersCount={offersCount}/>}
+          element={<Main offers={offers}/>}
         />
         <Route
           path={AppRoute.Favorites}
