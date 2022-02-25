@@ -1,7 +1,17 @@
+import { useParams } from 'react-router-dom';
+import Offer from '../../types/offers';
 import FormReview from '../form-review/form-review';
 import Header from '../header/header';
 
-function Property (): JSX.Element {
+type PropertyProps = {
+  offers: Array<Offer>,
+}
+
+function Property ({ offers }: PropertyProps): JSX.Element {
+
+  const currentScreenId = useParams();
+  const currentOffer = offers.find((offer) => offer.id === currentScreenId.id);
+
   return (
     <div className="page">
       <Header />
@@ -36,7 +46,7 @@ function Property (): JSX.Element {
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  { currentOffer?.title}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -54,21 +64,21 @@ function Property (): JSX.Element {
                   </span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{ currentOffer?.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  { currentOffer?.type }
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  { currentOffer?.bedrooms } Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max { currentOffer?.maxAdults } adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
+                <b className="property__price-value">&euro;{ currentOffer?.price }</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
@@ -121,10 +131,7 @@ function Property (): JSX.Element {
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                    { currentOffer?.description }
                   </p>
                 </div>
               </div>

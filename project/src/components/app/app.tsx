@@ -32,7 +32,7 @@ function App({ offers }: AppProps): JSX.Element {
         />
         <Route
           path={`${AppRoute.Room}/:id`}
-          element={<Property />}
+          element={<Property offers={offers} />}
         />
         <Route
           path={AppRoute.Login}
