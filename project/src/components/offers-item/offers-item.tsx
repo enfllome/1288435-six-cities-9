@@ -3,18 +3,25 @@ import { AppRoute } from '../../const';
 import Offer from '../../types/offers';
 
 type OfferItemProps = {
-  updateData: () => string;
+  offer: Offer,
+  updateData: (id: string) => void,
 }
 
-function OfferItem ({ price, title, type, previewImage, id }: Offer, updateData: OfferItemProps): JSX.Element {
+function OfferItem ({ offer, updateData }: OfferItemProps): JSX.Element {
+  const { price, title, type, previewImage, id } = offer;
+
+  const handleMouseOver = () => {
+    updateData(id);
+  };
+
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseOver={handleMouseOver}>
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.Room}/${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
         </Link>
       </div>
       <div className="place-card__info">

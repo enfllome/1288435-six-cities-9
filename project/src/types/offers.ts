@@ -1,5 +1,5 @@
 type Offer = {
-  id?: string,
+  id: string,
   previewImage?: string
   price: number,
   title: string,

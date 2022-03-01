@@ -20,7 +20,7 @@ function OffersList ({ offers }: OffersListProps):JSX.Element {
     <div className="cities__places-list places__list tabs__content">
       {
         offers.map((offer) => (
-          <OfferItem key={offer.id} updateData={updateData} {...offer} />
+          <OfferItem key={offer.id} updateData={updateData}  offer={offer} />
         ))
       }
     </div>
