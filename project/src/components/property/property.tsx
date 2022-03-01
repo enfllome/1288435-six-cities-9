@@ -9,8 +9,8 @@ type PropertyProps = {
 
 function Property ({ offers }: PropertyProps): JSX.Element {
 
-  const currentScreenId = useParams();
-  const currentOffer = offers.find((offer) => offer.id === currentScreenId.id);
+  const { id } = useParams();
+  const currentOffer = offers.find((offer) => offer.id === id);
 
   return (
     <div className="page">
@@ -46,7 +46,7 @@ function Property ({ offers }: PropertyProps): JSX.Element {
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  { currentOffer?.title}
+                  { currentOffer?.title }
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
