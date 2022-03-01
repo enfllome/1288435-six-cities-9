@@ -1,15 +1,44 @@
 import { ChangeEvent, useState } from 'react';
+import ReviewStar from '../review-star/review-star';
+
+const starOptions = [
+  {
+    id: '5-stars',
+    title: 'perfect',
+    value: 5,
+  },
+  {
+    id: '4-star',
+    title: 'good',
+    value: 4,
+  },
+  {
+    id: '3-stars',
+    title: 'not bad',
+    value: 3,
+  },
+  {
+    id: '2-stars',
+    title: 'badly',
+    value: 2,
+  },
+  {
+    id: '1-star',
+    title: 'terribly',
+    value: 1,
+  },
+];
 
 function FormReview (): JSX.Element {
   const [review, setReview] = useState('');
   const [stars, setStars] = useState('');
 
-  const fieldChangeHandle = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChangeField = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
     setReview(target.value);
   };
 
-  const ratingChangeHandle = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    setStars(target.value);
+  const updateData = (value: string) => {
+    setStars(value);
   };
 
   // eslint-disable-next-line no-console
@@ -19,81 +48,17 @@ function FormReview (): JSX.Element {
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="5"
-          id="5-stars"
-          type="radio"
-          onChange={ratingChangeHandle}
-        />
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="4"
-          id="4-stars"
-          type="radio"
-          onChange={ratingChangeHandle}
-        />
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="3"
-          id="3-stars"
-          type="radio"
-          onChange={ratingChangeHandle}
-        />
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="2"
-          id="2-stars"
-          type="radio"
-          onChange={ratingChangeHandle}
-        />
-        <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="1"
-          id="1-star"
-          type="radio"
-          onChange={ratingChangeHandle}
-        />
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+        {
+          starOptions.map((star) => (
+            <ReviewStar key={star.id} updateData={updateData} star={star} />
+          ))
+        }
       </div>
       <textarea
         className="reviews__textarea form__textarea"
         id="review" name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={fieldChangeHandle}
+        onChange={handleChangeField}
         value={review}
       >
       </textarea>
