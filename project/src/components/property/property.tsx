@@ -1,16 +1,12 @@
-import { useParams } from 'react-router-dom';
 import Offer from '../../types/offers';
 import FormReview from '../form-review/form-review';
 import Header from '../header/header';
 
 type PropertyProps = {
-  offers: Array<Offer>,
+  offer: Offer,
 }
 
-function Property ({ offers }: PropertyProps): JSX.Element {
-
-  const { id } = useParams();
-  const currentOffer = offers.find((offer) => offer.id === id);
+function Property ({ offer }: PropertyProps): JSX.Element {
 
   return (
     <div className="page">
@@ -46,7 +42,7 @@ function Property ({ offers }: PropertyProps): JSX.Element {
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  { currentOffer?.title }
+                  { offer.title }
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -64,21 +60,21 @@ function Property ({ offers }: PropertyProps): JSX.Element {
                   </span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{ currentOffer?.rating}</span>
+                <span className="property__rating-value rating__value">{ offer.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  { currentOffer?.type }
+                  { offer.type }
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  { currentOffer?.bedrooms } Bedrooms
+                  { offer.bedrooms } Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max { currentOffer?.maxAdults } adults
+                  Max { offer.maxAdults } adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{ currentOffer?.price }</b>
+                <b className="property__price-value">&euro;{ offer.price }</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
@@ -131,7 +127,7 @@ function Property ({ offers }: PropertyProps): JSX.Element {
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    { currentOffer?.description }
+                    { offer.description }
                   </p>
                 </div>
               </div>
