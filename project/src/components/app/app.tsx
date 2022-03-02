@@ -1,23 +1,24 @@
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
 import Favorites from '../favorites/favorites';
-import Property from '../property/property';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
+import Offer from '../../types/offers';
+import PropertyLogic from '../property-logic/property-logic';
 
 type AppProps = {
-  offersCount: number,
+  offers: Array<Offer>,
 };
 
-function App({ offersCount }: AppProps): JSX.Element {
+function App({ offers }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<Main offersCount={offersCount}/>}
+          element={<Main offers={offers}/>}
         />
         <Route
           path={AppRoute.Favorites}
@@ -25,13 +26,13 @@ function App({ offersCount }: AppProps): JSX.Element {
             <PrivateRoute
               autorizationStatus={AuthorizationStatus.Auth}
             >
-              <Favorites />
+              <Favorites offers={offers} />
             </PrivateRoute>
           }
         />
         <Route
-          path={AppRoute.Room}
-          element={<Property />}
+          path={`${AppRoute.Room}/:id`}
+          element={<PropertyLogic offers={offers} />}
         />
         <Route
           path={AppRoute.Login}
