@@ -11,6 +11,14 @@ export const offers: Offer[] = [
     rating: 4.8,
     bedrooms: 2,
     maxAdults: 3,
+    city: {
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
+    },
   },
   {
     id: '2',
@@ -22,6 +30,14 @@ export const offers: Offer[] = [
     rating: 3.2,
     bedrooms: 1,
     maxAdults: 1,
+    city: {
+      location: {
+        latitude: 52.369553943508,
+        longitude: 4.85309666406198,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
+    },
   },
   {
     id: '3',
@@ -33,6 +49,14 @@ export const offers: Offer[] = [
     rating: 5,
     bedrooms: 0,
     maxAdults: 1,
+    city: {
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.929309666406198,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
+    },
   },
   {
     id: '4',
@@ -44,5 +68,13 @@ export const offers: Offer[] = [
     rating: 5,
     bedrooms: 15,
     maxAdults: 20,
+    city: {
+      location: {
+        latitude: 52.3809553943508,
+        longitude: 4.939309666406198,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
+    },
   },
 ];

@@ -1,3 +1,5 @@
+import City from './city';
+
 type Offer = {
   id: string,
   previewImage?: string
@@ -8,6 +10,7 @@ type Offer = {
   rating?: number,
   bedrooms?: number,
   maxAdults?: number,
+  city: City,
 }
 
 export default Offer;
