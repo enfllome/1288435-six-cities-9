@@ -14,6 +14,8 @@ function OfferItem ({ offer, updateData }: OfferItemProps): JSX.Element {
     updateData(id);
   };
 
+  const ratingProcent = (offer.rating / 5) * 100;
+
   return (
     <article className="cities__place-card place-card" onMouseOver={handleMouseOver}>
       <div className="place-card__mark">
@@ -40,7 +42,7 @@ function OfferItem ({ offer, updateData }: OfferItemProps): JSX.Element {
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{
-              'width': '80%',
+              'width': `${ratingProcent}%`,
             }}
             >
             </span>
