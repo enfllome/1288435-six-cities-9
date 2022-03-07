@@ -1,12 +1,19 @@
+import Comment from '../../types/comment';
 import Offer from '../../types/offers';
 import FormReview from '../form-review/form-review';
 import Header from '../header/header';
+import ReviewsList from '../reviews-list/review-list';
+import Map from '../map/map';
+import { CITY } from '../../mocks/city';
 
 type PropertyProps = {
   offer: Offer,
+  offers: Array<Offer>,
+  comments: Array<Comment>,
 }
 
-function Property ({ offer }: PropertyProps): JSX.Element {
+function Property ({ offer, comments, offers }: PropertyProps): JSX.Element {
+  const ratingProcent = (offer.rating / 5) * 100;
 
   return (
     <div className="page">
@@ -54,7 +61,7 @@ function Property ({ offer }: PropertyProps): JSX.Element {
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
                   <span style={{
-                    'width': '80%',
+                    'width': `${ratingProcent}%`,
                   }}
                   >
                   </span>
@@ -132,40 +139,13 @@ function Property ({ offer }: PropertyProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
-                      </div>
-                      <span className="reviews__user-name">
-                        Max
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{
-                            'width': '80%',
-                          }}
-                          >
-                          </span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                    </div>
-                  </li>
-                </ul>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
+                <ReviewsList comments={comments} />
                 <FormReview />
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <Map classMap='property__map' city={CITY} points={offers}/>
         </section>
         <div className="container">
           <section className="near-places places">
