@@ -7,7 +7,7 @@ type Offer = {
   title: string,
   type: string,
   description?: string,
-  rating?: number,
+  rating: number,
   bedrooms?: number,
   maxAdults?: number,
   city: City,

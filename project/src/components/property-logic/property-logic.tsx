@@ -2,12 +2,14 @@ import { useParams } from 'react-router-dom';
 import Offer from '../../types/offers';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import Property from '../property/property';
+import Comment from '../../types/comment';
 
 type PropertyLogicProps = {
   offers: Array<Offer>,
+  comments: Array<Comment>,
 }
 
-function PropertyLogic ({ offers }:PropertyLogicProps): JSX.Element {
+function PropertyLogic ({ offers, comments }:PropertyLogicProps): JSX.Element {
   const { id } = useParams();
   const currentOffer = offers.find((offer) => offer.id === id);
 
@@ -16,7 +18,7 @@ function PropertyLogic ({ offers }:PropertyLogicProps): JSX.Element {
   }
 
   return (
-    <Property offer={currentOffer}/>
+    <Property offers={offers} offer={currentOffer} comments={comments}/>
   );
 }
 

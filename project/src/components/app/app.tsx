@@ -7,12 +7,14 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import Offer from '../../types/offers';
 import PropertyLogic from '../property-logic/property-logic';
+import Comment from '../../types/comment';
 
 type AppProps = {
   offers: Array<Offer>,
+  comments: Array<Comment>,
 };
 
-function App({ offers }: AppProps): JSX.Element {
+function App({ offers, comments }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -32,7 +34,7 @@ function App({ offers }: AppProps): JSX.Element {
         />
         <Route
           path={`${AppRoute.Room}/:id`}
-          element={<PropertyLogic offers={offers} />}
+          element={<PropertyLogic comments={comments} offers={offers} />}
         />
         <Route
           path={AppRoute.Login}

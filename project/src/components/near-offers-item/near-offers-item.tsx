@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Offer from '../../types/offers';
 
-type OfferItemProps = {
+type NearOffersItemProps = {
   offer: Offer,
   updateData: (id: string) => void,
 }
 
-function OfferItem ({ offer, updateData }: OfferItemProps): JSX.Element {
+function NearOffersItem ({ offer, updateData }: NearOffersItemProps): JSX.Element {
   const { price, title, type, previewImage, id } = offer;
 
   const handleMouseOver = () => {
@@ -17,11 +17,11 @@ function OfferItem ({ offer, updateData }: OfferItemProps): JSX.Element {
   const ratingProcent = (offer.rating / 5) * 100;
 
   return (
-    <article className="cities__place-card place-card" onMouseOver={handleMouseOver}>
+    <article className="near-places__card place-card" onMouseOver={handleMouseOver}>
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="near-places__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.Room}/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
         </Link>
@@ -58,4 +58,4 @@ function OfferItem ({ offer, updateData }: OfferItemProps): JSX.Element {
   );
 }
 
-export default OfferItem;
+export default NearOffersItem;
