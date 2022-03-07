@@ -91,7 +91,7 @@ function Main({ offers }: MainProps): JSX.Element {
               <OffersList offers={offers}/>
             </section>
             <div className="cities__right-section">
-              <Map city={CITY} points={offers}/>
+              <Map classMap='cities__map' city={CITY} points={offers}/>
             </div>
           </div>
         </div>
