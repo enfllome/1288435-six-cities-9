@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Offer from '../../types/offers';
 
-function FavoritesItem ({ price, title, type, previewImage, id }: Offer): JSX.Element {
+function FavoritesItem ({ price, title, type, previewImage, id, rating }: Offer): JSX.Element {
+  const ratingProcent = (rating / 5) * 100;
+
   return (
     <article className="favorites__card place-card">
       <div className="place-card__mark">
@@ -29,7 +31,7 @@ function FavoritesItem ({ price, title, type, previewImage, id }: Offer): JSX.El
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{
-              'width': '100%',
+              'width': `${ratingProcent}%`,
             }}
             >
             </span>
