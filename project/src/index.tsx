@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { comments } from './mocks/comments';
-import { offers } from './mocks/offers';
+import { store } from './store';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <App comments={comments} offers={offers}/>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'));
