@@ -3,10 +3,10 @@ import Offer from '../../types/offers';
 import OfferItem from '../offers-item/offers-item';
 
 type OffersListProps = {
-  offers: Array<Offer>,
+  filteredOffers: Array<Offer>,
 }
 
-function OffersList ({ offers }: OffersListProps):JSX.Element {
+function OffersList ({ filteredOffers }: OffersListProps):JSX.Element {
 
   const [activeCard, setActiveCard] = useState('');
   // eslint-disable-next-line no-console
@@ -19,7 +19,7 @@ function OffersList ({ offers }: OffersListProps):JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {
-        offers.map((offer) => (
+        filteredOffers.map((offer) => (
           <OfferItem key={offer.id} updateData={updateData}  offer={offer} />
         ))
       }

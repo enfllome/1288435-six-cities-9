@@ -1,12 +1,10 @@
-import Offer from '../../types/offers';
+import { useAppSelector } from '../../hooks';
 import FavoritesItem from '../favorites-item/favorites-item';
 import Header from '../header/header';
 
-type FavoritesProps = {
-  offers: Array<Offer>,
-};
 
-function Favorites ({ offers }: FavoritesProps): JSX.Element {
+function Favorites (): JSX.Element {
+  const { offers } = useAppSelector((state) => state);
   return (
     <>
       <Header />

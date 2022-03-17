@@ -1,15 +1,10 @@
 import { useParams } from 'react-router-dom';
-import Offer from '../../types/offers';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import Property from '../property/property';
-import Comment from '../../types/comment';
+import { useAppSelector } from '../../hooks';
 
-type PropertyLogicProps = {
-  offers: Array<Offer>,
-  comments: Array<Comment>,
-}
-
-function PropertyLogic ({ offers, comments }:PropertyLogicProps): JSX.Element {
+function PropertyLogic (): JSX.Element {
+  const { offers, comments } = useAppSelector((state) => state);
   const { id } = useParams();
   const currentOffer = offers.find((offer) => offer.id === id);
 
