@@ -1,15 +1,9 @@
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { CITY } from '../../mocks/city';
-import { setActiveCity } from '../../store/action';
 import Header from '../header/header';
+import LocationItem, { LocationItemProps } from '../location-item/location-item';
 import Map from '../map/map';
 import OffersList from '../offers-list/offers-list';
-
-type LocationItemProps = {
-  id: string;
-  name: string;
-  active: boolean;
-};
 
 const Locations: Array<LocationItemProps> = [
   {
@@ -43,21 +37,6 @@ const Locations: Array<LocationItemProps> = [
     active: false,
   },
 ];
-
-function LocationItem ({ name, id, active }: LocationItemProps ): JSX.Element {
-  const dispatch = useAppDispatch();
-  return (
-    <li className="locations__item">
-      <a
-        className={`locations__item-link tabs__item ${active ? 'tabs__item--active' : ''}`}
-        href="#"
-        onClick={() => dispatch(setActiveCity(name))}
-      >
-        <span>{ name }</span>
-      </a>
-    </li>
-  );
-}
 
 function Main(): JSX.Element {
   const { offers, activeCity } = useAppSelector((store) => store);
