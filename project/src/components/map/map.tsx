@@ -3,8 +3,8 @@ import useMap from '../../hooks/useMap';
 import City from '../../types/city';
 import 'leaflet/dist/leaflet.css';
 import Offer from '../../types/offers';
+import leaflet, { Icon, Marker } from 'leaflet';
 import { URL_MARKER_DEFAULT } from '../../const';
-import { Icon, Marker } from 'leaflet';
 
 type MapProps = {
   city: City,
@@ -14,13 +14,14 @@ type MapProps = {
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [30, 30],
+  iconAnchor: [15, 30],
 });
 
 function Map({ city, points, ...className }: MapProps): JSX.Element {
   const [map, mapRef] = useMap(city);
-
+  const markers = leaflet.layerGroup();
+  markers.clearLayers();
   useEffect(() => {
     if (map) {
       points.forEach((point) => {
@@ -31,11 +32,15 @@ function Map({ city, points, ...className }: MapProps): JSX.Element {
           icon: defaultCustomIcon,
         });
 
-        marker
-          .addTo(map);
+        markers.addLayer(marker);
       });
+      markers.addTo(map);
     }
-  }, [map, points]);
+
+    return () => {
+      markers.clearLayers();
+    };
+  }, [map, points, markers]);
 
   return <section ref={mapRef} {...className} />;
 }
