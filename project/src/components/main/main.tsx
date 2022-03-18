@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CITY } from '../../mocks/city';
 import { setActiveCity } from '../../store/action';
-import { getCity, getOffers } from '../../store/selectors';
+import { getCity, getOffersForSelectCity } from '../../store/selectors';
 import Header from '../header/header';
 import LocationItem from '../location-item/location-item';
 import Map from '../map/map';
@@ -17,11 +17,10 @@ const Locations: string[] = [
 ];
 
 function Main(): JSX.Element {
-  const offers = useAppSelector(getOffers);
   const activeCity = useAppSelector(getCity);
   const dispatch = useAppDispatch();
   const handleClickCity = (name: string) => dispatch(setActiveCity(name));
-  const filteredOffers = offers.filter((elem) =>  elem.city.name === activeCity);
+  const filteredOffers = useAppSelector(getOffersForSelectCity);
 
   return (
     <div className="page page--gray page--main">
