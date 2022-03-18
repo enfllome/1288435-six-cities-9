@@ -2,11 +2,13 @@ import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import Property from '../property/property';
 import { useAppSelector } from '../../hooks';
+import { getComments, getCurrentOffer, getOffers } from '../../store/selectors';
 
 function PropertyLogic (): JSX.Element {
-  const { offers, comments } = useAppSelector((state) => state);
+  const comments = useAppSelector(getComments);
+  const offers = useAppSelector(getOffers);
   const { id } = useParams();
-  const currentOffer = offers.find((offer) => offer.id === id);
+  const currentOffer = useAppSelector(getCurrentOffer(id));
 
   if(!currentOffer) {
     return <NotFoundScreen />;

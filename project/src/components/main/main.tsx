@@ -1,46 +1,26 @@
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CITY } from '../../mocks/city';
+import { setActiveCity } from '../../store/action';
+import { getCity, getOffers } from '../../store/selectors';
 import Header from '../header/header';
-import LocationItem, { LocationItemProps } from '../location-item/location-item';
+import LocationItem from '../location-item/location-item';
 import Map from '../map/map';
 import OffersList from '../offers-list/offers-list';
 
-const Locations: Array<LocationItemProps> = [
-  {
-    id: '0',
-    name: 'Paris',
-    active: true,
-  },
-  {
-    id: '1',
-    name: 'Cologne',
-    active: false,
-  },
-  {
-    id: '2',
-    name: 'Brussels',
-    active: false,
-  },
-  {
-    id: '3',
-    name: 'Amsterdam',
-    active: false,
-  },
-  {
-    id: '4',
-    name: 'Hamburg',
-    active: false,
-  },
-  {
-    id: '5',
-    name: 'Dusseldorf',
-    active: false,
-  },
+const Locations: string[] = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
 ];
 
 function Main(): JSX.Element {
-  const { offers, activeCity } = useAppSelector((store) => store);
-
+  const offers = useAppSelector(getOffers);
+  const activeCity = useAppSelector(getCity);
+  const dispatch = useAppDispatch();
+  const handleClickCity = (name: string) => dispatch(setActiveCity(name));
   const filteredOffers = offers.filter((elem) =>  elem.city.name === activeCity);
 
   return (
@@ -52,8 +32,8 @@ function Main(): JSX.Element {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               {
-                Locations.map(({id, name}) => (
-                  <LocationItem key={id} id={id} name={name} active={activeCity === name}/>
+                Locations.map((cityName) => (
+                  <LocationItem key={cityName} name={cityName} active={activeCity === cityName} handleClickCity={handleClickCity} />
                 ))
               }
             </ul>
