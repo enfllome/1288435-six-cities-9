@@ -5,22 +5,15 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
-import Offer from '../../types/offers';
 import PropertyLogic from '../property-logic/property-logic';
-import Comment from '../../types/comment';
 
-type AppProps = {
-  offers: Array<Offer>,
-  comments: Array<Comment>,
-};
-
-function App({ offers, comments }: AppProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<Main offers={offers}/>}
+          element={<Main />}
         />
         <Route
           path={AppRoute.Favorites}
@@ -28,13 +21,13 @@ function App({ offers, comments }: AppProps): JSX.Element {
             <PrivateRoute
               autorizationStatus={AuthorizationStatus.Auth}
             >
-              <Favorites offers={offers} />
+              <Favorites />
             </PrivateRoute>
           }
         />
         <Route
           path={`${AppRoute.Room}/:id`}
-          element={<PropertyLogic comments={comments} offers={offers} />}
+          element={<PropertyLogic />}
         />
         <Route
           path={AppRoute.Login}

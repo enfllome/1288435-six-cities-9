@@ -146,7 +146,7 @@ function Property ({ offer, comments, offers }: PropertyProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map classMap='property__map' city={CITY} points={offers}/>
+          <Map className='property__map map' city={CITY} points={offers}/>
         </section>
         <div className="container">
           <section className="near-places places">

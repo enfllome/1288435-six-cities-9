@@ -1,5 +1,6 @@
 import { Map, TileLayer } from 'leaflet';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { COPYRIGHT, TILE } from '../const';
 import City from '../types/city';
 
 function useMap(
@@ -20,10 +21,9 @@ function useMap(
       });
 
       const layer = new TileLayer(
-        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        TILE,
         {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+          attribution: COPYRIGHT,
         },
       );
 

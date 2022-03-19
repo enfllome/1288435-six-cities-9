@@ -1,57 +1,27 @@
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CITY } from '../../mocks/city';
-import Offer from '../../types/offers';
+import { setActiveCity } from '../../store/action';
+import { getCity, getOffersForSelectCity } from '../../store/selectors';
 import Header from '../header/header';
+import LocationItem from '../location-item/location-item';
 import Map from '../map/map';
 import OffersList from '../offers-list/offers-list';
 
-
-type MainProps = {
-  offers: Array<Offer>,
-};
-
-type LocationItemProps = {
-  id: string;
-  name: string;
-};
-
-const Locations: Array<LocationItemProps> = [
-  {
-    id: '0',
-    name: 'Paris',
-  },
-  {
-    id: '1',
-    name: 'Cologne',
-  },
-  {
-    id: '2',
-    name: 'Brussels',
-  },
-  {
-    id: '3',
-    name: 'Amsterdam',
-  },
-  {
-    id: '4',
-    name: 'Hamburg',
-  },
-  {
-    id: '5',
-    name: 'Dusseldorf',
-  },
+const Locations: string[] = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
 ];
 
-function LocationItem ({ name, id }: LocationItemProps ): JSX.Element {
-  return (
-    <li className="locations__item">
-      <a className="locations__item-link tabs__item" href="#">
-        <span>{ name }</span>
-      </a>
-    </li>
-  );
-}
+function Main(): JSX.Element {
+  const activeCity = useAppSelector(getCity);
+  const dispatch = useAppDispatch();
+  const handleClickCity = (name: string) => dispatch(setActiveCity(name));
+  const filteredOffers = useAppSelector(getOffersForSelectCity);
 
-function Main({ offers }: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -61,8 +31,8 @@ function Main({ offers }: MainProps): JSX.Element {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               {
-                Locations.map(({id, name}) => (
-                  <LocationItem key={id} id={id} name={name}/>
+                Locations.map((cityName) => (
+                  <LocationItem key={cityName} name={cityName} active={activeCity === cityName} handleClickCity={handleClickCity} />
                 ))
               }
             </ul>
@@ -72,7 +42,7 @@ function Main({ offers }: MainProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{ offers.length } places to stay in Amsterdam</b>
+              <b className="places__found">{ filteredOffers.length } places to stay in {activeCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by </span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -88,10 +58,10 @@ function Main({ offers }: MainProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OffersList offers={offers}/>
+              <OffersList filteredOffers={filteredOffers}/>
             </section>
             <div className="cities__right-section">
-              <Map classMap='cities__map' city={CITY} points={offers}/>
+              <Map className='cities__map map' city={CITY} points={filteredOffers}/>
             </div>
           </div>
         </div>
