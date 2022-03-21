@@ -4,14 +4,14 @@ import Offer from '../../types/offers';
 
 type OfferItemProps = {
   offer: Offer,
-  updateData: (id: string) => void,
+  getCurrentOffer: (offer: Offer) => void,
 }
 
-function OfferItem ({ offer, updateData }: OfferItemProps): JSX.Element {
+function OfferItem ({ offer, getCurrentOffer }: OfferItemProps): JSX.Element {
   const { price, title, type, previewImage, id } = offer;
 
   const handleMouseOver = () => {
-    updateData(id);
+    getCurrentOffer(offer);
   };
 
   const ratingProcent = (offer.rating / 5) * 100;

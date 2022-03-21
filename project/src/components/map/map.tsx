@@ -4,12 +4,13 @@ import City from '../../types/city';
 import 'leaflet/dist/leaflet.css';
 import Offer from '../../types/offers';
 import leaflet, { Icon, Marker } from 'leaflet';
-import { URL_MARKER_DEFAULT } from '../../const';
+import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 
 type MapProps = {
   city: City,
   points: Offer[],
   className: string,
+  selectedOffer?: Offer | null,
 }
 
 const defaultCustomIcon = new Icon({
@@ -18,7 +19,13 @@ const defaultCustomIcon = new Icon({
   iconAnchor: [15, 30],
 });
 
-function Map({ city, points, ...className }: MapProps): JSX.Element {
+const currentCustomIcon = new Icon({
+  iconUrl: URL_MARKER_CURRENT,
+  iconSize: [30, 30],
+  iconAnchor: [15, 30],
+});
+
+function Map({ city, points, selectedOffer, ...className }: MapProps): JSX.Element {
   const [map, mapRef] = useMap(city);
   const markers = leaflet.layerGroup();
   markers.clearLayers();
@@ -29,7 +36,9 @@ function Map({ city, points, ...className }: MapProps): JSX.Element {
           lat: point.city.location.latitude,
           lng: point.city.location.longitude,
         }, {
-          icon: defaultCustomIcon,
+          icon: (selectedOffer && point.id === selectedOffer.id)
+            ? currentCustomIcon
+            : defaultCustomIcon,
         });
 
         markers.addLayer(marker);
@@ -40,7 +49,7 @@ function Map({ city, points, ...className }: MapProps): JSX.Element {
     return () => {
       markers.clearLayers();
     };
-  }, [map, points, markers]);
+  }, [map, points, markers, selectedOffer]);
 
   return <section ref={mapRef} {...className} />;
 }

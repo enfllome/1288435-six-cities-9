@@ -1,26 +1,24 @@
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { selectOffer } from '../../store/action';
 import Offer from '../../types/offers';
 import OfferItem from '../offers-item/offers-item';
 
 type OffersListProps = {
-  filteredOffers: Array<Offer>,
+  sortedOffers: Array<Offer>,
 }
 
-function OffersList ({ filteredOffers }: OffersListProps):JSX.Element {
+function OffersList ({ sortedOffers }: OffersListProps):JSX.Element {
+  const dispatch = useDispatch();
 
-  const [activeCard, setActiveCard] = useState('');
-  // eslint-disable-next-line no-console
-  console.log(activeCard);
-
-  const updateData = (value: string) => {
-    setActiveCard(value);
+  const getCurrentOffer = (offer: Offer) => {
+    dispatch(selectOffer(offer));
   };
 
   return (
     <div className="cities__places-list places__list tabs__content">
       {
-        filteredOffers.map((offer) => (
-          <OfferItem key={offer.id} updateData={updateData}  offer={offer} />
+        sortedOffers.map((offer) => (
+          <OfferItem key={offer.id} getCurrentOffer={getCurrentOffer} offer={offer} />
         ))
       }
     </div>

@@ -7,11 +7,11 @@ type NearOffersListProps = {
 }
 
 function NearOffersList ({ offers }: NearOffersListProps): JSX.Element {
-  const [activeCard, setActiveCard] = useState('');
+  const [activeCard, setActiveCard] = useState<number | null>(null);
   // eslint-disable-next-line no-console
   console.log(activeCard);
 
-  const updateData = (value: string) => {
+  const updateData = (value: number) => {
     setActiveCard(value);
   };
 
