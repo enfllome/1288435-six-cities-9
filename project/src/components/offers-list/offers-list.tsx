@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { selectOffer } from '../../store/action';
+import { selectOffer, unselectOffer } from '../../store/action';
 import Offer from '../../types/offers';
 import OfferItem from '../offers-item/offers-item';
 
@@ -14,11 +14,15 @@ function OffersList ({ sortedOffers }: OffersListProps):JSX.Element {
     dispatch(selectOffer(offer));
   };
 
+  const setCurrentOffer = () => {
+    dispatch(unselectOffer(null));
+  };
+
   return (
     <div className="cities__places-list places__list tabs__content">
       {
         sortedOffers.map((offer) => (
-          <OfferItem key={offer.id} getCurrentOffer={getCurrentOffer} offer={offer} />
+          <OfferItem key={offer.id} getCurrentOffer={getCurrentOffer} setCurrentOffer={setCurrentOffer} offer={offer} />
         ))
       }
     </div>

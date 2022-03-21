@@ -5,19 +5,24 @@ import Offer from '../../types/offers';
 type OfferItemProps = {
   offer: Offer,
   getCurrentOffer: (offer: Offer) => void,
+  setCurrentOffer: () => void,
 }
 
-function OfferItem ({ offer, getCurrentOffer }: OfferItemProps): JSX.Element {
+function OfferItem ({ offer, getCurrentOffer, setCurrentOffer }: OfferItemProps): JSX.Element {
   const { price, title, type, previewImage, id } = offer;
 
   const handleMouseOver = () => {
     getCurrentOffer(offer);
   };
 
+  const handleMouseLeave = () => {
+    setCurrentOffer();
+  };
+
   const ratingProcent = (offer.rating / 5) * 100;
 
   return (
-    <article className="cities__place-card place-card" onMouseOver={handleMouseOver}>
+    <article className="cities__place-card place-card" onMouseLeave={handleMouseLeave} onMouseOver={handleMouseOver}>
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
