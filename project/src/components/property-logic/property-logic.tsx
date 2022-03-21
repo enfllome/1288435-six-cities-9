@@ -8,7 +8,7 @@ function PropertyLogic (): JSX.Element {
   const comments = useAppSelector(getComments);
   const offers = useAppSelector(getOffers);
   const { id } = useParams();
-  const currentOffer = useAppSelector(getCurrentOffer(id));
+  const currentOffer = useAppSelector(getCurrentOffer(Number(id)));
 
   if(!currentOffer) {
     return <NotFoundScreen />;

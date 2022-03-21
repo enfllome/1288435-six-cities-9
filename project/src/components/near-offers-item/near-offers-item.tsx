@@ -4,7 +4,7 @@ import Offer from '../../types/offers';
 
 type NearOffersItemProps = {
   offer: Offer,
-  updateData: (id: string) => void,
+  updateData: (id: number) => void,
 }
 
 function NearOffersItem ({ offer, updateData }: NearOffersItemProps): JSX.Element {

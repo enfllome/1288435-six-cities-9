@@ -1,7 +1,7 @@
 import City from './city';
 
 type Offer = {
-  id: string,
+  id: number,
   previewImage?: string
   price: number,
   title: string,

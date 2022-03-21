@@ -1,11 +1,12 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CITY } from '../../mocks/city';
-import { setActiveCity } from '../../store/action';
-import { getCity, getOffersForSelectCity } from '../../store/selectors';
+import { setActiveCity, setSorted } from '../../store/action';
+import { getCity, getCurrentSorted, getHoveredOffer, getOffersForSelectCity, getSortOffersByType } from '../../store/selectors';
 import Header from '../header/header';
 import LocationItem from '../location-item/location-item';
 import Map from '../map/map';
 import OffersList from '../offers-list/offers-list';
+import Sorted from '../sorted/sorted';
 
 const Locations: string[] = [
   'Paris',
@@ -21,7 +22,12 @@ function Main(): JSX.Element {
   const dispatch = useAppDispatch();
   const handleClickCity = (name: string) => dispatch(setActiveCity(name));
   const filteredOffers = useAppSelector(getOffersForSelectCity);
-
+  const currentSorting = useAppSelector(getCurrentSorted);
+  const setSorting = (typeSort: string) => {
+    dispatch(setSorted(typeSort));
+  };
+  const sortedOffers = getSortOffersByType(filteredOffers,currentSorting);
+  const selectedOffer = useAppSelector(getHoveredOffer);
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -43,25 +49,11 @@ function Main(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{ filteredOffers.length } places to stay in {activeCity}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by </span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
-              <OffersList filteredOffers={filteredOffers}/>
+              <Sorted currentSorting={currentSorting} setSorting={setSorting}/>
+              <OffersList sortedOffers={sortedOffers}/>
             </section>
             <div className="cities__right-section">
-              <Map className='cities__map map' city={CITY} points={filteredOffers}/>
+              <Map className='cities__map map' city={CITY} points={filteredOffers} selectedOffer={selectedOffer}/>
             </div>
           </div>
         </div>
