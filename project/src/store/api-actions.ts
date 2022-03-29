@@ -5,7 +5,7 @@ import Offer from '../types/offers';
 import { loadOffers } from './action';
 
 
-export const fetchQuestionAction = createAsyncThunk(
+export const fetchOfferAction = createAsyncThunk(
   'data/fetchOffers',
   async () => {
     const {data} = await api.get<Offer[]>(APIRoute.Offers);
