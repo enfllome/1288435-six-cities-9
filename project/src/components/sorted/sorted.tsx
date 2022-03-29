@@ -9,13 +9,13 @@ type SortedProps = {
 function Sorted({ currentSorting, setSorting }: SortedProps): JSX.Element {
 
   const [isActive, setIsactive] = useState(false);
-  const onClick = () => {
+  const handleSortClick = () => {
     setIsactive(!isActive);
   };
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by </span>
-      <span className="places__sorting-type" tabIndex={0} onClick={onClick}>
+      <span className="places__sorting-type" tabIndex={0} onClick={handleSortClick}>
         {
           sorted.find((sorter) => sorter.name === currentSorting)?.title
         }

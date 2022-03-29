@@ -1,14 +1,25 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { comments } from '../mocks/comments';
-import { offers } from '../mocks/offers';
-import { selectOffer, setActiveCity, setSorted, unselectOffer } from './action';
+import Comment from '../types/comment';
+import Offer from '../types/offers';
+import { selectOffer, setActiveCity, setSorted, unselectOffer, loadOffers } from './action';
 
-const initialState = {
+type InitialState = {
+  activeCity: string,
+  offers: Offer[],
+  comments: Comment[],
+  sorting: string,
+  hoveredOffer: Offer | null,
+  isDataLoaded: boolean,
+}
+
+const initialState: InitialState = {
   activeCity: 'Paris',
-  offers,
+  offers: [],
   comments,
   sorting: 'id',
   hoveredOffer: null,
+  isDataLoaded: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -23,6 +34,10 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(unselectOffer, (state, action) => {
       state.hoveredOffer = action.payload;
+    })
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+      state.isDataLoaded = true;
     });
 });
 

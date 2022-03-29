@@ -4,19 +4,18 @@ import Offer from '../../types/offers';
 
 type OfferItemProps = {
   offer: Offer,
-  getCurrentOffer: (offer: Offer) => void,
-  setCurrentOffer: () => void,
+  setCurrentOffer: (offer: Offer | null) => void,
 }
 
-function OfferItem ({ offer, getCurrentOffer, setCurrentOffer }: OfferItemProps): JSX.Element {
+function OfferItem ({ offer, setCurrentOffer }: OfferItemProps): JSX.Element {
   const { price, title, type, previewImage, id } = offer;
 
   const handleMouseOver = () => {
-    getCurrentOffer(offer);
+    setCurrentOffer(offer);
   };
 
   const handleMouseLeave = () => {
-    setCurrentOffer();
+    setCurrentOffer(null);
   };
 
   const ratingProcent = (offer.rating / 5) * 100;
