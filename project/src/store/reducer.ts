@@ -10,6 +10,7 @@ type InitialState = {
   comments: Comment[],
   sorting: string,
   hoveredOffer: Offer | null,
+  isDataLoaded: boolean,
 }
 
 const initialState: InitialState = {
@@ -18,6 +19,7 @@ const initialState: InitialState = {
   comments,
   sorting: 'id',
   hoveredOffer: null,
+  isDataLoaded: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -35,6 +37,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
+      state.isDataLoaded = true;
     });
 });
 

@@ -28,3 +28,5 @@ export const getSortOffersByType = (offers: Offer[], typeSort: string) => {
 };
 
 export const getHoveredOffer = (state: State) => state.hoveredOffer;
+
+export const getDataLoaded = (state: State) => state.isDataLoaded;
