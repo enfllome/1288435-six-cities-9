@@ -1,11 +1,20 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { comments } from '../mocks/comments';
-import { offers } from '../mocks/offers';
+import Comment from '../types/comment';
+import Offer from '../types/offers';
 import { selectOffer, setActiveCity, setSorted, unselectOffer } from './action';
 
-const initialState = {
+type InitialState = {
+  activeCity: string,
+  offers: Offer[],
+  comments: Comment[],
+  sorting: string,
+  hoveredOffer: Offer | null,
+}
+
+const initialState: InitialState = {
   activeCity: 'Paris',
-  offers,
+  offers: [],
   comments,
   sorting: 'id',
   hoveredOffer: null,
