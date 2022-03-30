@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import useMap from '../../hooks/useMap';
-import City from '../../types/city';
 import 'leaflet/dist/leaflet.css';
 import Offer from '../../types/offers';
 import leaflet, { Icon, Marker } from 'leaflet';
-import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
+import { COORDINATES, URL_MARKER_CURRENT, URL_MARKER_DEFAULT, ZOOM } from '../../const';
+import { CityName } from '../../types/city-name';
 
 type MapProps = {
-  city: City,
+  city: CityName,
   points: Offer[],
   className: string,
   selectedOffer?: Offer | null,
@@ -31,10 +31,11 @@ function Map({ city, points, selectedOffer, ...className }: MapProps): JSX.Eleme
   markers.clearLayers();
   useEffect(() => {
     if (map) {
+      map.flyTo(leaflet.latLng(COORDINATES[city].LAT, COORDINATES[city].LNG), ZOOM);
       points.forEach((point) => {
         const marker = new Marker({
-          lat: point.city.location.latitude,
-          lng: point.city.location.longitude,
+          lat: point.location.latitude,
+          lng: point.location.longitude,
         }, {
           icon: (selectedOffer && point.id === selectedOffer.id)
             ? currentCustomIcon

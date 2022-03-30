@@ -1,11 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { comments } from '../mocks/comments';
 import Comment from '../types/comment';
+import { CityName } from '../types/city-name';
 import Offer from '../types/offers';
 import { selectOffer, setActiveCity, setSorted, unselectOffer, loadOffers } from './action';
 
 type InitialState = {
-  activeCity: string,
+  activeCity: CityName,
   offers: Offer[],
   comments: Comment[],
   sorting: string,
