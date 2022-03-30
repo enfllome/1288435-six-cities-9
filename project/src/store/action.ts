@@ -21,3 +21,5 @@ export const unselectOffer = createAction('main/unselectOffer', (offer) => ({
 export const loadOffers = createAction<Offer[]>('data/loadOffers');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+
+export const setError = createAction<string>('main/setError');
