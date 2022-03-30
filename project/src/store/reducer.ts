@@ -1,9 +1,10 @@
+import { AuthorizationStatus } from './../const';
 import { createReducer } from '@reduxjs/toolkit';
 import { comments } from '../mocks/comments';
 import Comment from '../types/comment';
 import { CityName } from '../types/city-name';
 import Offer from '../types/offers';
-import { selectOffer, setActiveCity, setSorted, unselectOffer, loadOffers } from './action';
+import { selectOffer, setActiveCity, setSorted, unselectOffer, loadOffers, requireAuthorization } from './action';
 
 type InitialState = {
   activeCity: CityName,
@@ -12,6 +13,7 @@ type InitialState = {
   sorting: string,
   hoveredOffer: Offer | null,
   isDataLoaded: boolean,
+  authorizationStatus: AuthorizationStatus
 }
 
 const initialState: InitialState = {
@@ -21,6 +23,7 @@ const initialState: InitialState = {
   sorting: 'id',
   hoveredOffer: null,
   isDataLoaded: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -39,6 +42,9 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
       state.isDataLoaded = true;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
 

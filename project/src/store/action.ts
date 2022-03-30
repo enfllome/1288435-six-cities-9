@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import { AuthorizationStatus } from '../const';
 import Offer from '../types/offers';
 
 export const setActiveCity = createAction('main/setActiveCity', (cityName) => ({
@@ -18,3 +19,5 @@ export const unselectOffer = createAction('main/unselectOffer', (offer) => ({
 }));
 
 export const loadOffers = createAction<Offer[]>('data/loadOffers');
+
+export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
