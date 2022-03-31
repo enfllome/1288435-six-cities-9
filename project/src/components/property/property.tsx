@@ -6,6 +6,11 @@ import ReviewsList from '../reviews-list/review-list';
 import Map from '../map/map';
 import NearOffersList from '../near-offers-list/near-offers-list';
 import { CityName } from '../../types/city-name';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchOfferAction } from '../../store/api-actions';
+import GoodsList from '../goods-list/goods-list';
+import Host from '../host/host';
 
 type PropertyProps = {
   offer: Offer,
@@ -16,6 +21,15 @@ type PropertyProps = {
 
 function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Element {
   const ratingProcent = (offer.rating / 5) * 100;
+  const {id, images} = offer;
+
+  const sliceImages = images.slice(0, 6);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOfferAction(id));
+  }, [dispatch, id]);
 
   return (
     <div className="page">
@@ -24,31 +38,23 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
+              {
+                sliceImages.map((img, idx) => (
+                  <div key={`${idx + img}`} className="property__image-wrapper">
+                    <img className="property__image" src={img} alt="Photos studio" />
+                  </div>
+                ))
+              }
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {
+                offer.isPremium &&
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div>
+              }
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   { offer.title }
@@ -86,54 +92,10 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
                 <b className="property__price-value">&euro;{ offer.price }</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
-              <div className="property__inside">
-                <h2 className="property__inside-title">What&apos;s inside</h2>
-                <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
-                </ul>
-              </div>
+              <GoodsList goods={offer.goods}/>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
-                <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
-                  </div>
-                  <span className="property__user-name">
-                    Angelina
-                  </span>
-                  <span className="property__user-status">
-                    Pro
-                  </span>
-                </div>
+                <Host host={offer.host}/>
                 <div className="property__description">
                   <p className="property__text">
                     { offer.description }
