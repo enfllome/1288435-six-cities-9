@@ -6,7 +6,7 @@ import { api, store } from '../store';
 import { AuthData } from '../types/auth-data';
 import Offer from '../types/offers';
 import { UserData } from '../types/user-data';
-import { loadOffers, redirectToRoute, requireAuthorization, setError } from './action';
+import { loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError } from './action';
 
 export const clearErrorAction = createAsyncThunk(
   'main/clearError',
@@ -18,12 +18,24 @@ export const clearErrorAction = createAsyncThunk(
   },
 );
 
-export const fetchOfferAction = createAsyncThunk(
+export const fetchOffersAction = createAsyncThunk(
   'data/fetchOffers',
   async () => {
     try {
       const {data} = await api.get<Offer[]>(APIRoute.Offers);
       store.dispatch(loadOffers(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchOfferAction = (id: number) => createAsyncThunk(
+  'data/fetchOffer',
+  async () => {
+    try {
+      const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+      store.dispatch(loadOffer(data));
     } catch (error) {
       errorHandle(error);
     }
