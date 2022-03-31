@@ -4,16 +4,17 @@ import FormReview from '../form-review/form-review';
 import Header from '../header/header';
 import ReviewsList from '../reviews-list/review-list';
 import Map from '../map/map';
-import { CITY } from '../../mocks/city';
 import NearOffersList from '../near-offers-list/near-offers-list';
+import { CityName } from '../../types/city-name';
 
 type PropertyProps = {
   offer: Offer,
   offers: Array<Offer>,
   comments: Array<Comment>,
+  city: CityName,
 }
 
-function Property ({ offer, comments, offers }: PropertyProps): JSX.Element {
+function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Element {
   const ratingProcent = (offer.rating / 5) * 100;
 
   return (
@@ -146,7 +147,7 @@ function Property ({ offer, comments, offers }: PropertyProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map className='property__map map' city={CITY} points={offers}/>
+          <Map className='property__map map' city={city} points={offers}/>
         </section>
         <div className="container">
           <section className="near-places places">

@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { CITY } from '../../mocks/city';
 import { setActiveCity, setSorted } from '../../store/action';
 import { getCity, getCurrentSorted, getHoveredOffer, getOffersForSelectCity, getSortOffersByType } from '../../store/selectors';
 import Header from '../header/header';
@@ -53,7 +52,7 @@ function Main(): JSX.Element {
               <OffersList sortedOffers={sortedOffers}/>
             </section>
             <div className="cities__right-section">
-              <Map className='cities__map map' city={CITY} points={filteredOffers} selectedOffer={selectedOffer}/>
+              <Map className='cities__map map' city={activeCity} points={filteredOffers} selectedOffer={selectedOffer}/>
             </div>
           </div>
         </div>
