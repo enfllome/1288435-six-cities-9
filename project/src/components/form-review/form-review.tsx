@@ -31,13 +31,13 @@ const starOptions = [
 
 function FormReview (): JSX.Element {
   const [review, setReview] = useState('');
-  const [stars, setStars] = useState('');
+  const [stars, setStars] = useState(0);
 
   const handleChangeField = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
     setReview(target.value);
   };
 
-  const updateData = (value: string) => {
+  const updateData = (value: number) => {
     setStars(value);
   };
 

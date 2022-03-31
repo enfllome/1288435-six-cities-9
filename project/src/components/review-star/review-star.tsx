@@ -3,13 +3,13 @@ import Star from '../../types/star';
 
 type ReviewStarProps = {
   star: Star,
-  updateData: (value: string) => void,
+  updateData: (value: number) => void,
 }
 
 function ReviewStar ({ star, updateData }: ReviewStarProps): JSX.Element {
 
   const handleChangeRating = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    updateData(target.value);
+    updateData(Number(target.value));
   };
   return (
     <>
