@@ -31,9 +31,9 @@ export const fetchOffersAction = createAsyncThunk(
   },
 );
 
-export const fetchOfferAction = (id: number) => createAsyncThunk(
+export const fetchOfferAction = createAsyncThunk(
   'data/fetchOffer',
-  async () => {
+  async (id: number) => {
     try {
       const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
       store.dispatch(loadOffer(data));
@@ -84,9 +84,9 @@ export const logoutAction = createAsyncThunk(
   },
 );
 
-export const fetchCommentsAction = (id: number) => createAsyncThunk(
+export const fetchCommentsAction = createAsyncThunk(
   'data/comments',
-  async () => {
+  async (id: number) => {
     try {
       const {data} = await api.get<Comment[]>(`${APIRoute.Comments}/${id}`);
       store.dispatch(loadComments(data));
