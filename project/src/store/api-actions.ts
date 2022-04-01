@@ -5,6 +5,7 @@ import { dropToken, saveToken } from '../services/token';
 import { api, store } from '../store';
 import { AuthData } from '../types/auth-data';
 import Comment from '../types/comment';
+import { CommentData } from '../types/comment-data';
 import Offer from '../types/offers';
 import { UserData } from '../types/user-data';
 import { loadComments, loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError } from './action';
@@ -90,6 +91,19 @@ export const fetchCommentsAction = createAsyncThunk(
     try {
       const {data} = await api.get<Comment[]>(`${APIRoute.Comments}/${id}`);
       store.dispatch(loadComments(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const commentAction = createAsyncThunk(
+  'user/comments',
+  async ({id, comment, rating}: CommentData) => {
+    try {
+      const {data} = await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
+      // eslint-disable-next-line no-console
+      console.log(data);
     } catch (error) {
       errorHandle(error);
     }
