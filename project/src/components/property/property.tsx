@@ -8,6 +8,9 @@ import NearOffersList from '../near-offers-list/near-offers-list';
 import { CityName } from '../../types/city-name';
 import GoodsList from '../goods-list/goods-list';
 import Host from '../host/host';
+import { getAutorizationStatus } from '../../store/selectors';
+import { useAppSelector } from '../../hooks';
+import { AuthorizationStatus } from '../../const';
 
 type PropertyProps = {
   offer: Offer,
@@ -22,6 +25,8 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
   const ratingProcent = (rating / 5) * 100;
 
   const sliceImages = images.slice(0, 6);
+
+  const autorizationStatus = useAppSelector(getAutorizationStatus);
 
   return (
     <div className="page">
@@ -97,7 +102,9 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
                 <ReviewsList comments={comments} />
-                <FormReview />
+                {
+                  autorizationStatus === AuthorizationStatus.Auth && <FormReview />
+                }
               </section>
             </div>
           </div>
