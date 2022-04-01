@@ -5,6 +5,8 @@ export const getCity = (state: State) => state.activeCity;
 
 export const getOffers = (state: State) => state.offers;
 
+export const getOffer = (state: State) => state.selectedOffer;
+
 export const getComments = (state: State) => state.comments;
 
 export const getCurrentOffer = (id: number | undefined) => (state: State) => state.offers.find((offer) => offer.id === id);
@@ -30,6 +32,8 @@ export const getSortOffersByType = (offers: Offer[], typeSort: string) => {
 export const getHoveredOffer = (state: State) => state.hoveredOffer;
 
 export const getDataLoaded = (state: State) => state.isDataLoaded;
+
+export const getCurrentOfferLoaded = (state: State) => state.isCurrentOfferLoaded;
 
 export const getAutorizationStatus = (state: State) => state.authorizationStatus;
 
