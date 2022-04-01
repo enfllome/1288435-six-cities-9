@@ -20,7 +20,7 @@ type PropertyProps = {
 }
 
 function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Element {
-  const {rating, images, isPremium, title, type, bedrooms, maxAdults, price, goods, host, description} = offer;
+  const {rating, images, isPremium, title, type, bedrooms, maxAdults, price, goods, host, description, id} = offer;
 
   const ratingProcent = (rating / 5) * 100;
 
@@ -103,7 +103,7 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
                 <ReviewsList comments={comments} />
                 {
-                  autorizationStatus === AuthorizationStatus.Auth && <FormReview />
+                  autorizationStatus === AuthorizationStatus.Auth && <FormReview id={id}/>
                 }
               </section>
             </div>
