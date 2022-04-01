@@ -6,9 +6,6 @@ import ReviewsList from '../reviews-list/review-list';
 import Map from '../map/map';
 import NearOffersList from '../near-offers-list/near-offers-list';
 import { CityName } from '../../types/city-name';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchCommentsAction, fetchOfferAction } from '../../store/api-actions';
 import GoodsList from '../goods-list/goods-list';
 import Host from '../host/host';
 
@@ -20,17 +17,11 @@ type PropertyProps = {
 }
 
 function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Element {
-  const ratingProcent = (offer.rating / 5) * 100;
-  const {id, images} = offer;
+  const {rating, images, isPremium, title, type, bedrooms, maxAdults, price, goods, host, description} = offer;
+
+  const ratingProcent = (rating / 5) * 100;
 
   const sliceImages = images.slice(0, 6);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchOfferAction(id));
-    dispatch(fetchCommentsAction(id));
-  }, [dispatch, id]);
 
   return (
     <div className="page">
@@ -51,14 +42,14 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
           <div className="property__container container">
             <div className="property__wrapper">
               {
-                offer.isPremium &&
+                isPremium &&
                 <div className="property__mark">
                   <span>Premium</span>
                 </div>
               }
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  { offer.title }
+                  { title }
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -76,30 +67,30 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
                   </span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{ offer.rating}</span>
+                <span className="property__rating-value rating__value">{ rating }</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  { offer.type }
+                  { type }
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  { offer.bedrooms } Bedrooms
+                  { bedrooms } Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max { offer.maxAdults } adults
+                  Max { maxAdults } adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{ offer.price }</b>
+                <b className="property__price-value">&euro;{ price }</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
-              <GoodsList goods={offer.goods}/>
+              <GoodsList goods={goods}/>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
-                <Host host={offer.host}/>
+                <Host host={host}/>
                 <div className="property__description">
                   <p className="property__text">
-                    { offer.description }
+                    { description }
                   </p>
                 </div>
               </div>
