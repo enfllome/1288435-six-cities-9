@@ -4,9 +4,10 @@ import { errorHandle } from '../services/error-handle';
 import { dropToken, saveToken } from '../services/token';
 import { api, store } from '../store';
 import { AuthData } from '../types/auth-data';
+import Comment from '../types/comment';
 import Offer from '../types/offers';
 import { UserData } from '../types/user-data';
-import { loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError } from './action';
+import { loadComments, loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError } from './action';
 
 export const clearErrorAction = createAsyncThunk(
   'main/clearError',
@@ -77,6 +78,18 @@ export const logoutAction = createAsyncThunk(
       await api.delete(APIRoute.Logout);
       dropToken();
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchCommentsAction = (id: number) => createAsyncThunk(
+  'data/comments',
+  async () => {
+    try {
+      const {data} = await api.get<Comment[]>(`${APIRoute.Comments}/${id}`);
+      store.dispatch(loadComments(data));
     } catch (error) {
       errorHandle(error);
     }

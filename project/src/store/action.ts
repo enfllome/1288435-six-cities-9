@@ -1,6 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { AppRoute, AuthorizationStatus } from '../const';
 import Offer from '../types/offers';
+import Comment from '../types/comment';
 
 export const setActiveCity = createAction('main/setActiveCity', (cityName) => ({
   payload: cityName,
@@ -27,3 +28,5 @@ export const requireAuthorization = createAction<AuthorizationStatus>('user/requ
 export const setError = createAction<string>('main/setError');
 
 export const redirectToRoute = createAction<AppRoute>('main/redirectToRoute');
+
+export const loadComments = createAction<Comment[]>('data/loadComments');

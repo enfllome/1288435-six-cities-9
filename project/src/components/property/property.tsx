@@ -8,7 +8,7 @@ import NearOffersList from '../near-offers-list/near-offers-list';
 import { CityName } from '../../types/city-name';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchOfferAction } from '../../store/api-actions';
+import { fetchCommentsAction, fetchOfferAction } from '../../store/api-actions';
 import GoodsList from '../goods-list/goods-list';
 import Host from '../host/host';
 
@@ -29,6 +29,7 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
 
   useEffect(() => {
     dispatch(fetchOfferAction(id));
+    dispatch(fetchCommentsAction(id));
   }, [dispatch, id]);
 
   return (

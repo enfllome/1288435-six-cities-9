@@ -1,10 +1,9 @@
 import { AuthorizationStatus } from './../const';
 import { createReducer } from '@reduxjs/toolkit';
-import { comments } from '../mocks/comments';
 import Comment from '../types/comment';
 import { CityName } from '../types/city-name';
 import Offer from '../types/offers';
-import { selectOffer, setActiveCity, setSorted, unselectOffer, loadOffers, requireAuthorization, setError } from './action';
+import { selectOffer, setActiveCity, setSorted, unselectOffer, loadOffers, requireAuthorization, setError, loadComments } from './action';
 
 type InitialState = {
   activeCity: CityName,
@@ -20,7 +19,7 @@ type InitialState = {
 const initialState: InitialState = {
   activeCity: 'Paris',
   offers: [],
-  comments,
+  comments: [],
   sorting: 'id',
   hoveredOffer: null,
   isDataLoaded: false,
@@ -50,6 +49,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
     });
 });
 
