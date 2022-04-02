@@ -39,4 +39,6 @@ export const getAutorizationStatus = (state: State) => state.authorizationStatus
 
 export const getError = (state: State) => state.error;
 
+export const getCommentSendingStatus = (state: State) => state.commentSendingStatus;
+
 
