@@ -1,4 +1,4 @@
-import { AuthorizationStatus, CommentSendingStatus } from './../const';
+import { AuthorizationStatus, CommentSendingStatus, DEFAULT_OFFER } from './../const';
 import { createReducer } from '@reduxjs/toolkit';
 import Comment from '../types/comment';
 import { CityName } from '../types/city-name';
@@ -8,7 +8,7 @@ import { selectOffer, setActiveCity, setSorted, unselectOffer, loadOffers, requi
 type InitialState = {
   activeCity: CityName,
   offers: Offer[],
-  selectedOffer: Offer | null,
+  selectedOffer: Offer,
   comments: Comment[],
   sorting: string,
   hoveredOffer: Offer | null,
@@ -22,7 +22,7 @@ type InitialState = {
 const initialState: InitialState = {
   activeCity: 'Paris',
   offers: [],
-  selectedOffer: null,
+  selectedOffer: DEFAULT_OFFER,
   comments: [],
   sorting: 'id',
   hoveredOffer: null,
