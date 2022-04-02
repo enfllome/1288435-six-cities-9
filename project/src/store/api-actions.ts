@@ -4,9 +4,11 @@ import { errorHandle } from '../services/error-handle';
 import { dropToken, saveToken } from '../services/token';
 import { api, store } from '../store';
 import { AuthData } from '../types/auth-data';
+import Comment from '../types/comment';
+import { CommentData } from '../types/comment-data';
 import Offer from '../types/offers';
 import { UserData } from '../types/user-data';
-import { loadOffers, redirectToRoute, requireAuthorization, setError } from './action';
+import { loadComments, loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError } from './action';
 
 export const clearErrorAction = createAsyncThunk(
   'main/clearError',
@@ -18,12 +20,24 @@ export const clearErrorAction = createAsyncThunk(
   },
 );
 
-export const fetchOfferAction = createAsyncThunk(
+export const fetchOffersAction = createAsyncThunk(
   'data/fetchOffers',
   async () => {
     try {
       const {data} = await api.get<Offer[]>(APIRoute.Offers);
       store.dispatch(loadOffers(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchOfferAction = createAsyncThunk(
+  'data/fetchOffer',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+      store.dispatch(loadOffer(data));
     } catch (error) {
       errorHandle(error);
     }
@@ -65,6 +79,30 @@ export const logoutAction = createAsyncThunk(
       await api.delete(APIRoute.Logout);
       dropToken();
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchCommentsAction = createAsyncThunk(
+  'data/comments',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<Comment[]>(`${APIRoute.Comments}/${id}`);
+      store.dispatch(loadComments(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const commentAction = createAsyncThunk(
+  'user/comments',
+  async ({id, comment, rating}: CommentData) => {
+    try {
+      await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
+      store.dispatch(fetchCommentsAction(id));
     } catch (error) {
       errorHandle(error);
     }

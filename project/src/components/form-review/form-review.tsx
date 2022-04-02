@@ -1,4 +1,7 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { commentAction } from '../../store/api-actions';
+import { CommentData } from '../../types/comment-data';
 import ReviewStar from '../review-star/review-star';
 
 const starOptions = [
@@ -29,23 +32,42 @@ const starOptions = [
   },
 ];
 
-function FormReview (): JSX.Element {
+type FormReviewProps = {
+  id: number,
+}
+
+function FormReview ({id}: FormReviewProps): JSX.Element {
   const [review, setReview] = useState('');
-  const [stars, setStars] = useState('');
+  const [stars, setStars] = useState(0);
 
   const handleChangeField = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
     setReview(target.value);
   };
 
-  const updateData = (value: string) => {
+  const updateData = (value: number) => {
     setStars(value);
   };
 
-  // eslint-disable-next-line no-console
-  console.log(stars);
+  const dispatch = useAppDispatch();
+
+  const onSubmit = (сommentData: CommentData) => {
+    dispatch(commentAction(сommentData));
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (review !== null && stars !== null) {
+      onSubmit({
+        id,
+        comment: review,
+        rating: stars,
+      });
+    }
+  };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {

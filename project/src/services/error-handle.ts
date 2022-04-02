@@ -1,6 +1,7 @@
+import { AppRoute } from './../const';
 import request from 'axios';
 import {store} from '../store';
-import {setError} from '../store/action';
+import {redirectToRoute, setError} from '../store/action';
 import {clearErrorAction} from '../store/api-actions';
 import {ErrorType} from '../types/error';
 import {HTTP_CODE} from '../const';
@@ -27,6 +28,7 @@ export const errorHandle = (error: ErrorType): void => {
         break;
       case HTTP_CODE.NOT_FOUND:
         handleError(response.data.error);
+        store.dispatch(redirectToRoute(AppRoute.NotFound));
         break;
     }
   }
