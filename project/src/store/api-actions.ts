@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus, CommentSendingStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { errorHandle } from '../services/error-handle';
 import { dropToken, saveToken } from '../services/token';
 import { api, store } from '../store';
@@ -8,7 +8,7 @@ import Comment from '../types/comment';
 import { CommentData } from '../types/comment-data';
 import Offer from '../types/offers';
 import { UserData } from '../types/user-data';
-import { loadComments, loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError } from './action';
+import { changeCommentSendingStatus, loadComments, loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError } from './action';
 
 export const clearErrorAction = createAsyncThunk(
   'main/clearError',
@@ -103,8 +103,10 @@ export const commentAction = createAsyncThunk(
     try {
       await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
       store.dispatch(fetchCommentsAction(id));
+      store.dispatch(changeCommentSendingStatus(CommentSendingStatus.Sent));
     } catch (error) {
       errorHandle(error);
+      store.dispatch(changeCommentSendingStatus(CommentSendingStatus.Error));
     }
   },
 );

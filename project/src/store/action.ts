@@ -30,3 +30,7 @@ export const setError = createAction<string>('main/setError');
 export const redirectToRoute = createAction<AppRoute>('main/redirectToRoute');
 
 export const loadComments = createAction<Comment[]>('data/loadComments');
+
+export const changeCommentSendingStatus = createAction('property/changeCommentSendingStatus', (status) => ({
+  payload: status,
+}));

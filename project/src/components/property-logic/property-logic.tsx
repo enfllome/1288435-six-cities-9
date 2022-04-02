@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
 import Property from '../property/property';
 import { useAppSelector } from '../../hooks';
 import { getCity, getComments, getCurrentOfferLoaded, getOffer, getOffers } from '../../store/selectors';
@@ -27,10 +26,6 @@ function PropertyLogic (): JSX.Element {
     return (
       <LoadingScreen />
     );
-  }
-
-  if(!offer) {
-    return <NotFoundScreen />;
   }
 
   return (

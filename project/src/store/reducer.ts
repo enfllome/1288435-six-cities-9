@@ -1,33 +1,35 @@
-import { AuthorizationStatus } from './../const';
+import { AuthorizationStatus, CommentSendingStatus, DEFAULT_OFFER } from './../const';
 import { createReducer } from '@reduxjs/toolkit';
 import Comment from '../types/comment';
 import { CityName } from '../types/city-name';
 import Offer from '../types/offers';
-import { selectOffer, setActiveCity, setSorted, unselectOffer, loadOffers, requireAuthorization, setError, loadComments, loadOffer } from './action';
+import { selectOffer, setActiveCity, setSorted, unselectOffer, loadOffers, requireAuthorization, setError, loadComments, loadOffer, changeCommentSendingStatus } from './action';
 
 type InitialState = {
   activeCity: CityName,
   offers: Offer[],
-  selectedOffer: Offer | null,
+  selectedOffer: Offer,
   comments: Comment[],
   sorting: string,
   hoveredOffer: Offer | null,
   isDataLoaded: boolean,
   isCurrentOfferLoaded: boolean,
   authorizationStatus: AuthorizationStatus,
+  commentSendingStatus: CommentSendingStatus
   error: string,
 }
 
 const initialState: InitialState = {
   activeCity: 'Paris',
   offers: [],
-  selectedOffer: null,
+  selectedOffer: DEFAULT_OFFER,
   comments: [],
   sorting: 'id',
   hoveredOffer: null,
   isDataLoaded: false,
   isCurrentOfferLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
+  commentSendingStatus: CommentSendingStatus.NotSent,
   error: '',
 };
 
@@ -60,6 +62,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadComments, (state, action) => {
       state.comments = action.payload;
+    })
+    .addCase(changeCommentSendingStatus, (state, action) => {
+      state.commentSendingStatus = action.payload;
     });
 });
 
