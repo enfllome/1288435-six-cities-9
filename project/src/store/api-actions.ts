@@ -101,9 +101,8 @@ export const commentAction = createAsyncThunk(
   'user/comments',
   async ({id, comment, rating}: CommentData) => {
     try {
-      const {data} = await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
-      // eslint-disable-next-line no-console
-      console.log(data);
+      await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
+      store.dispatch(fetchCommentsAction(id));
     } catch (error) {
       errorHandle(error);
     }

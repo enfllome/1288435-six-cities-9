@@ -48,9 +48,6 @@ function FormReview ({id}: FormReviewProps): JSX.Element {
     setStars(value);
   };
 
-  // eslint-disable-next-line no-console
-  console.log(stars);
-
   const dispatch = useAppDispatch();
 
   const onSubmit = (сommentData: CommentData) => {
