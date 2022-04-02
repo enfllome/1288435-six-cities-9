@@ -1,9 +1,9 @@
-import { AuthorizationStatus } from './../const';
+import { AuthorizationStatus, CommentSendingStatus } from './../const';
 import { createReducer } from '@reduxjs/toolkit';
 import Comment from '../types/comment';
 import { CityName } from '../types/city-name';
 import Offer from '../types/offers';
-import { selectOffer, setActiveCity, setSorted, unselectOffer, loadOffers, requireAuthorization, setError, loadComments, loadOffer } from './action';
+import { selectOffer, setActiveCity, setSorted, unselectOffer, loadOffers, requireAuthorization, setError, loadComments, loadOffer, changeCommentSendingStatus } from './action';
 
 type InitialState = {
   activeCity: CityName,
@@ -15,6 +15,7 @@ type InitialState = {
   isDataLoaded: boolean,
   isCurrentOfferLoaded: boolean,
   authorizationStatus: AuthorizationStatus,
+  commentSendingStatus: CommentSendingStatus
   error: string,
 }
 
@@ -28,6 +29,7 @@ const initialState: InitialState = {
   isDataLoaded: false,
   isCurrentOfferLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
+  commentSendingStatus: CommentSendingStatus.NotSent,
   error: '',
 };
 
@@ -60,6 +62,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadComments, (state, action) => {
       state.comments = action.payload;
+    })
+    .addCase(changeCommentSendingStatus, (state, action) => {
+      state.commentSendingStatus = action.payload;
     });
 });
 
