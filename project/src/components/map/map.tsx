@@ -11,6 +11,7 @@ type MapProps = {
   points: Offer[],
   className: string,
   selectedOffer?: Offer | null,
+  currentOffer?: Offer | null,
 }
 
 const defaultCustomIcon = new Icon({
@@ -25,19 +26,22 @@ const currentCustomIcon = new Icon({
   iconAnchor: [15, 30],
 });
 
-function Map({ city, points, selectedOffer, ...className }: MapProps): JSX.Element {
+function Map({ city, points, selectedOffer, currentOffer, ...className }: MapProps): JSX.Element {
   const [map, mapRef] = useMap(city);
   const markers = leaflet.layerGroup();
   markers.clearLayers();
+
+  const pins = currentOffer ? [...points, currentOffer] : points;
+
   useEffect(() => {
     if (map) {
       map.flyTo(leaflet.latLng(COORDINATES[city].LAT, COORDINATES[city].LNG), ZOOM);
-      points.forEach((point) => {
+      pins.forEach((point) => {
         const marker = new Marker({
           lat: point.location.latitude,
           lng: point.location.longitude,
         }, {
-          icon: (selectedOffer && point.id === selectedOffer.id)
+          icon: (selectedOffer && point.id === selectedOffer.id) || (currentOffer && point.id === currentOffer.id)
             ? currentCustomIcon
             : defaultCustomIcon,
         });
@@ -50,7 +54,8 @@ function Map({ city, points, selectedOffer, ...className }: MapProps): JSX.Eleme
     return () => {
       markers.clearLayers();
     };
-  }, [map, points, markers, selectedOffer]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map, points, selectedOffer]);
 
   return <section ref={mapRef} {...className} />;
 }

@@ -8,7 +8,7 @@ import NearOffersList from '../near-offers-list/near-offers-list';
 import { CityName } from '../../types/city-name';
 import GoodsList from '../goods-list/goods-list';
 import Host from '../host/host';
-import { getAutorizationStatus } from '../../store/selectors';
+import { getAutorizationStatus, getCurrentOffer } from '../../store/selectors';
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
 import PropertyGallery from '../property-gallery/property-gallery';
@@ -25,6 +25,7 @@ function Property ({ offer, comments, nearbyOffers, city }: PropertyProps): JSX.
   const {rating, images, isPremium, title, type, bedrooms, maxAdults, price, goods, host, description, id} = offer;
 
   const autorizationStatus = useAppSelector(getAutorizationStatus);
+  const currentOffer = useAppSelector(getCurrentOffer(id));
 
   return (
     <div className="page">
@@ -100,7 +101,7 @@ function Property ({ offer, comments, nearbyOffers, city }: PropertyProps): JSX.
               </section>
             </div>
           </div>
-          <Map className='property__map map' city={city} points={nearbyOffers}/>
+          <Map className='property__map map' city={city} points={nearbyOffers} currentOffer={currentOffer} />
         </section>
         <div className="container">
           <section className="near-places places">
