@@ -1,8 +1,8 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { CommentSendingStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCommentSendingStatus } from '../../store/action';
 import { commentAction } from '../../store/api-actions';
+import { changeCommentSendingStatus } from '../../store/reducers/data-process/data-process';
 import { getCommentSendingStatus } from '../../store/selectors';
 import { CommentData } from '../../types/comment-data';
 import ReviewStar from '../review-star/review-star';

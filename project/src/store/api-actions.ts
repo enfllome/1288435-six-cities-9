@@ -8,7 +8,10 @@ import Comment from '../types/comment';
 import { CommentData } from '../types/comment-data';
 import Offer from '../types/offers';
 import { UserData } from '../types/user-data';
-import { changeCommentSendingStatus, loadComments, loadNearby, loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError } from './action';
+import { redirectToRoute } from './action';
+import { setError } from './reducers/another-process/another-process';
+import { changeCommentSendingStatus, loadComments, loadNearby, loadOffer, loadOffers } from './reducers/data-process/data-process';
+import { requireAuthorization } from './reducers/user-process/user-process';
 
 export const clearErrorAction = createAsyncThunk(
   'main/clearError',

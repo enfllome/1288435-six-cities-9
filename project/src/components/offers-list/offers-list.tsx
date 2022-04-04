@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { selectOffer } from '../../store/action';
+import { selectOffer } from '../../store/reducers/another-process/another-process';
 import Offer from '../../types/offers';
 import OfferItem from '../offers-item/offers-item';
 

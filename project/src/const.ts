@@ -136,3 +136,9 @@ export const LOCATIONS: string[] = [
   'Hamburg',
   'Dusseldorf',
 ];
+
+export enum NameSpace {
+  data = 'DATA',
+  another = 'ANOTHER',
+  user = 'USER',
+}

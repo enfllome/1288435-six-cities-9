@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveCity, setSorted } from '../../store/action';
+import { setActiveCity, setSorted } from '../../store/reducers/another-process/another-process';
 import { getCity, getCurrentSorted, getHoveredOffer, getOffersForSelectCity, getSortOffersByType } from '../../store/selectors';
 import Header from '../header/header';
 import LocationList from '../location-list/location-list';

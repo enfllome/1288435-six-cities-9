@@ -1,10 +1,6 @@
-import { useAppSelector } from '../../hooks';
-import FavoritesItem from '../favorites-item/favorites-item';
 import Header from '../header/header';
 
-
 function Favorites (): JSX.Element {
-  const { offers } = useAppSelector((state) => state);
   return (
     <>
       <Header />
@@ -22,11 +18,11 @@ function Favorites (): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {
+                  {/* {
                     offers.map((offer) => (
                       <FavoritesItem key={offer.id} {...offer} />
                     ))
-                  }
+                  } */}
                 </div>
               </li>
             </ul>

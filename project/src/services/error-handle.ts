@@ -1,10 +1,11 @@
 import { AppRoute } from './../const';
 import request from 'axios';
 import {store} from '../store';
-import {redirectToRoute, setError} from '../store/action';
+import {redirectToRoute} from '../store/action';
 import {clearErrorAction} from '../store/api-actions';
 import {ErrorType} from '../types/error';
 import {HTTP_CODE} from '../const';
+import { setError } from '../store/reducers/another-process/another-process';
 
 export const errorHandle = (error: ErrorType): void => {
   if (!request.isAxiosError(error)) {

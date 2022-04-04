@@ -1,21 +1,21 @@
 import Offer from '../../types/offers';
 import { State } from '../../types/state';
 
-export const getCity = (state: State) => state.activeCity;
+export const getCity = ({ANOTHER}: State) => ANOTHER.activeCity;
 
-export const getOffers = (state: State) => state.offers;
+export const getOffers = ({DATA}: State) => DATA.offers;
 
-export const getOffer = (state: State) => state.selectedOffer;
+export const getOffer = ({DATA}: State) => DATA.selectedOffer;
 
-export const getNearbyOffers = (state: State) => state.nearbyOffers;
+export const getNearbyOffers = ({DATA}: State) => DATA.nearbyOffers;
 
-export const getComments = (state: State) => state.comments;
+export const getComments = ({DATA}: State) => DATA.comments;
 
-export const getCurrentOffer = (id: number | undefined) => (state: State) => state.offers.find((offer) => offer.id === id);
+export const getCurrentOffer = (id: number | undefined) => ({DATA}: State) => DATA.offers.find((offer) => offer.id === id);
 
-export const getOffersForSelectCity = (state: State) => state.offers.filter((elem) =>  elem.city.name === state.activeCity);
+export const getOffersForSelectCity = ({DATA, ANOTHER}: State) => DATA.offers.filter((elem) =>  elem.city.name === ANOTHER.activeCity);
 
-export const getCurrentSorted = (state: State) => state.sorting;
+export const getCurrentSorted = ({ANOTHER}: State) => ANOTHER.sorting;
 
 export const getSortOffersByType = (offers: Offer[], typeSort: string) => {
   switch(typeSort) {
@@ -31,16 +31,16 @@ export const getSortOffersByType = (offers: Offer[], typeSort: string) => {
   }
 };
 
-export const getHoveredOffer = (state: State) => state.hoveredOffer;
+export const getHoveredOffer = ({ANOTHER}: State) => ANOTHER.hoveredOffer;
 
-export const getDataLoaded = (state: State) => state.isDataLoaded;
+export const getDataLoaded = ({DATA}: State) => DATA.isDataLoaded;
 
-export const getCurrentOfferLoaded = (state: State) => state.isCurrentOfferLoaded;
+export const getCurrentOfferLoaded = ({DATA}: State) => DATA.isCurrentOfferLoaded;
 
-export const getAutorizationStatus = (state: State) => state.authorizationStatus;
+export const getAutorizationStatus = ({USER}: State) => USER.authorizationStatus;
 
-export const getError = (state: State) => state.error;
+export const getError = ({ANOTHER}: State) => ANOTHER.error;
 
-export const getCommentSendingStatus = (state: State) => state.commentSendingStatus;
+export const getCommentSendingStatus = ({DATA}: State) => DATA.commentSendingStatus;
 
 
