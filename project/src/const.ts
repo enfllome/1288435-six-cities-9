@@ -127,3 +127,12 @@ export const DEFAULT_OFFER = {
   title: '',
   type: '',
 };
+
+export const LOCATIONS: string[] = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
