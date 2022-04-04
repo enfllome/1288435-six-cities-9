@@ -8,7 +8,7 @@ type OfferItemProps = {
 }
 
 function OfferItem ({ offer, setCurrentOffer }: OfferItemProps): JSX.Element {
-  const { price, title, type, previewImage, id } = offer;
+  const { price, title, type, previewImage, id, isPremium } = offer;
 
   const handleMouseOver = () => {
     setCurrentOffer(offer);
@@ -22,9 +22,12 @@ function OfferItem ({ offer, setCurrentOffer }: OfferItemProps): JSX.Element {
 
   return (
     <article className="cities__place-card place-card" onMouseLeave={handleMouseLeave} onMouseOver={handleMouseOver}>
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
+      {
+        isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      }
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.Room}/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
