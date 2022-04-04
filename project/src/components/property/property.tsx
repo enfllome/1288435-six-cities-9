@@ -11,6 +11,7 @@ import Host from '../host/host';
 import { getAutorizationStatus } from '../../store/selectors';
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
+import PropertyGallery from '../property-gallery/property-gallery';
 
 type PropertyProps = {
   offer: Offer,
@@ -24,8 +25,6 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
 
   const ratingProcent = (rating / 5) * 100;
 
-  const sliceImages = images.slice(0, 6);
-
   const autorizationStatus = useAppSelector(getAutorizationStatus);
 
   return (
@@ -35,13 +34,7 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {
-                sliceImages.map((img, idx) => (
-                  <div key={`${idx + img}`} className="property__image-wrapper">
-                    <img className="property__image" src={img} alt="Photos studio" />
-                  </div>
-                ))
-              }
+              <PropertyGallery images={images}/>
             </div>
           </div>
           <div className="property__container container">
