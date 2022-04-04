@@ -12,6 +12,7 @@ import { getAutorizationStatus } from '../../store/selectors';
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
 import PropertyGallery from '../property-gallery/property-gallery';
+import { calculateRating } from '../../utils';
 
 type PropertyProps = {
   offer: Offer,
@@ -22,8 +23,6 @@ type PropertyProps = {
 
 function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Element {
   const {rating, images, isPremium, title, type, bedrooms, maxAdults, price, goods, host, description, id} = offer;
-
-  const ratingProcent = (rating / 5) * 100;
 
   const autorizationStatus = useAppSelector(getAutorizationStatus);
 
@@ -59,7 +58,7 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
                   <span style={{
-                    'width': `${ratingProcent}%`,
+                    'width': `${calculateRating(rating)}%`,
                   }}
                   >
                   </span>

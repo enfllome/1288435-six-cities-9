@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Offer from '../../types/offers';
+import { calculateRating } from '../../utils';
 
 type OfferItemProps = {
   offer: Offer,
@@ -8,7 +9,7 @@ type OfferItemProps = {
 }
 
 function OfferItem ({ offer, setCurrentOffer }: OfferItemProps): JSX.Element {
-  const { price, title, type, previewImage, id, isPremium } = offer;
+  const { price, title, type, previewImage, id, isPremium, rating } = offer;
 
   const handleMouseOver = () => {
     setCurrentOffer(offer);
@@ -17,8 +18,6 @@ function OfferItem ({ offer, setCurrentOffer }: OfferItemProps): JSX.Element {
   const handleMouseLeave = () => {
     setCurrentOffer(null);
   };
-
-  const ratingProcent = (offer.rating / 5) * 100;
 
   return (
     <article className="cities__place-card place-card" onMouseLeave={handleMouseLeave} onMouseOver={handleMouseOver}>
@@ -49,7 +48,7 @@ function OfferItem ({ offer, setCurrentOffer }: OfferItemProps): JSX.Element {
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{
-              'width': `${ratingProcent}%`,
+              'width': `${calculateRating(rating)}%`,
             }}
             >
             </span>
