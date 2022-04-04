@@ -8,7 +8,7 @@ import Comment from '../types/comment';
 import { CommentData } from '../types/comment-data';
 import Offer from '../types/offers';
 import { UserData } from '../types/user-data';
-import { changeCommentSendingStatus, loadComments, loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError } from './action';
+import { changeCommentSendingStatus, loadComments, loadNearby, loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError } from './action';
 
 export const clearErrorAction = createAsyncThunk(
   'main/clearError',
@@ -38,6 +38,18 @@ export const fetchOfferAction = createAsyncThunk(
     try {
       const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
       store.dispatch(loadOffer(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchNearbyOffersAction = createAsyncThunk(
+  'data/fetchNearbyOffer',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
+      store.dispatch(loadNearby(data));
     } catch (error) {
       errorHandle(error);
     }

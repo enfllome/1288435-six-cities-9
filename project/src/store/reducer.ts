@@ -3,11 +3,12 @@ import { createReducer } from '@reduxjs/toolkit';
 import Comment from '../types/comment';
 import { CityName } from '../types/city-name';
 import Offer from '../types/offers';
-import { selectOffer, setActiveCity, setSorted, unselectOffer, loadOffers, requireAuthorization, setError, loadComments, loadOffer, changeCommentSendingStatus } from './action';
+import { selectOffer, setActiveCity, setSorted, unselectOffer, loadOffers, requireAuthorization, setError, loadComments, loadOffer, changeCommentSendingStatus, loadNearby } from './action';
 
 type InitialState = {
   activeCity: CityName,
   offers: Offer[],
+  nearbyOffers: Offer[],
   selectedOffer: Offer,
   comments: Comment[],
   sorting: string,
@@ -22,6 +23,7 @@ type InitialState = {
 const initialState: InitialState = {
   activeCity: 'Paris',
   offers: [],
+  nearbyOffers: [],
   selectedOffer: DEFAULT_OFFER,
   comments: [],
   sorting: 'id',
@@ -65,6 +67,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeCommentSendingStatus, (state, action) => {
       state.commentSendingStatus = action.payload;
+    })
+    .addCase(loadNearby, (state, action) => {
+      state.nearbyOffers = action.payload;
     });
 });
 

@@ -7,6 +7,8 @@ export const getOffers = (state: State) => state.offers;
 
 export const getOffer = (state: State) => state.selectedOffer;
 
+export const getNearbyOffers = (state: State) => state.nearbyOffers;
+
 export const getComments = (state: State) => state.comments;
 
 export const getCurrentOffer = (id: number | undefined) => (state: State) => state.offers.find((offer) => offer.id === id);

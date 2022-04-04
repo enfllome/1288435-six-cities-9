@@ -16,12 +16,12 @@ import { calculateRating } from '../../utils';
 
 type PropertyProps = {
   offer: Offer,
-  offers: Array<Offer>,
+  nearbyOffers: Array<Offer>,
   comments: Array<Comment>,
   city: CityName,
 }
 
-function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Element {
+function Property ({ offer, comments, nearbyOffers, city }: PropertyProps): JSX.Element {
   const {rating, images, isPremium, title, type, bedrooms, maxAdults, price, goods, host, description, id} = offer;
 
   const autorizationStatus = useAppSelector(getAutorizationStatus);
@@ -100,12 +100,12 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
               </section>
             </div>
           </div>
-          <Map className='property__map map' city={city} points={offers}/>
+          <Map className='property__map map' city={city} points={nearbyOffers}/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearOffersList offers={offers}/>
+            <NearOffersList offers={nearbyOffers}/>
           </section>
         </div>
       </main>
