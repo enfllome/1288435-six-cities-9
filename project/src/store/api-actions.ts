@@ -12,7 +12,7 @@ import { UserData } from '../types/user-data';
 import { redirectToRoute } from './action';
 import { setError } from './reducers/another-process/another-process';
 import { changeCommentSendingStatus, loadComments, loadFavorites, loadNearby, loadOffer, loadOffers, updateFavoriteOffer } from './reducers/data-process/data-process';
-import { requireAuthorization } from './reducers/user-process/user-process';
+import { removeLogin, requireAuthorization, setLogin } from './reducers/user-process/user-process';
 
 export const clearErrorAction = createAsyncThunk(
   'main/clearError',
@@ -78,8 +78,7 @@ export const changeFavoriteStatus = createAsyncThunk(
     try {
       const {data} = await api.post(`${APIRoute.Favorite}/${id}/${status}`);
       store.dispatch(updateFavoriteOffer(data));
-    }
-    catch(err){
+    } catch(err){
       errorHandle(err);
     }
   },
@@ -105,6 +104,7 @@ export const loginAction = createAsyncThunk(
       const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(token);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(setLogin(email));
       store.dispatch(redirectToRoute(AppRoute.Root));
     } catch (error) {
       errorHandle(error);
@@ -120,6 +120,7 @@ export const logoutAction = createAsyncThunk(
       await api.delete(APIRoute.Logout);
       dropToken();
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      store.dispatch(removeLogin(''));
     } catch (error) {
       errorHandle(error);
     }

@@ -45,4 +45,6 @@ export const getError = ({ANOTHER}: State) => ANOTHER.error;
 
 export const getCommentSendingStatus = ({DATA}: State) => DATA.commentSendingStatus;
 
+export const getLogin = ({USER}: State) => USER.login;
+
 

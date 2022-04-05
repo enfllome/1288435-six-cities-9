@@ -5,7 +5,8 @@ import { CityName } from './city-name';
 import Comment from './comment';
 
 export type UserProcess = {
-  authorizationStatus: AuthorizationStatus
+  authorizationStatus: AuthorizationStatus,
+  login: string,
 };
 
 export type DataProcess = {

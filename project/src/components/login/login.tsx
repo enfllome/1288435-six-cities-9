@@ -6,7 +6,7 @@ import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import Header from '../header/header';
 
-function SignIn ():JSX.Element {
+function Login ():JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
@@ -77,4 +77,4 @@ function SignIn ():JSX.Element {
   );
 }
 
-export default SignIn;
+export default Login;
