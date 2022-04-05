@@ -13,6 +13,7 @@ export type DataProcess = {
   nearbyOffers: Offer[],
   selectedOffer: Offer,
   comments: Comment[],
+  favoriteOffers: Offer[],
   isDataLoaded: boolean,
   isCurrentOfferLoaded: boolean,
   commentSendingStatus: CommentSendingStatus

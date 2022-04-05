@@ -4,13 +4,14 @@ import { errorHandle } from '../services/error-handle';
 import { dropToken, saveToken } from '../services/token';
 import { api, store } from '../store';
 import { AuthData } from '../types/auth-data';
+import { ChangeFavoriteStatus } from '../types/change-favorite-status';
 import Comment from '../types/comment';
 import { CommentData } from '../types/comment-data';
 import Offer from '../types/offers';
 import { UserData } from '../types/user-data';
 import { redirectToRoute } from './action';
 import { setError } from './reducers/another-process/another-process';
-import { changeCommentSendingStatus, loadComments, loadNearby, loadOffer, loadOffers } from './reducers/data-process/data-process';
+import { changeCommentSendingStatus, loadComments, loadFavorites, loadNearby, loadOffer, loadOffers, updateFavoriteOffer } from './reducers/data-process/data-process';
 import { requireAuthorization } from './reducers/user-process/user-process';
 
 export const clearErrorAction = createAsyncThunk(
@@ -55,6 +56,31 @@ export const fetchNearbyOffersAction = createAsyncThunk(
       store.dispatch(loadNearby(data));
     } catch (error) {
       errorHandle(error);
+    }
+  },
+);
+
+export const fetchFavoriteOffersAction = createAsyncThunk(
+  'data/fetchFavoriteOffersAction',
+  async () => {
+    try {
+      const {data} = await api.get(APIRoute.Favorite);
+      store.dispatch(loadFavorites(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const changeFavoriteStatus = createAsyncThunk(
+  'data/changeFavoriteStatus',
+  async ({id, status}: ChangeFavoriteStatus)=>{
+    try {
+      const {data} = await api.post(`${APIRoute.Favorite}/${id}/${status}`);
+      store.dispatch(updateFavoriteOffer(data));
+    }
+    catch(err){
+      errorHandle(err);
     }
   },
 );
@@ -125,3 +151,4 @@ export const commentAction = createAsyncThunk(
     }
   },
 );
+

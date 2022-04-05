@@ -8,6 +8,7 @@ const initialState: DataProcess = {
   nearbyOffers: [],
   selectedOffer: DEFAULT_OFFER,
   comments: [],
+  favoriteOffers: [],
   isDataLoaded: false,
   isCurrentOfferLoaded: false,
   commentSendingStatus: CommentSendingStatus.NotSent,
@@ -34,7 +35,15 @@ export const dataProcess = createSlice({
     loadNearby: (state, action) => {
       state.nearbyOffers = action.payload;
     },
+    loadFavorites: (state, action) => {
+      state.favoriteOffers = action.payload;
+    },
+    updateFavoriteOffer: (state, action) => {
+      const {id} = action.payload;
+      const index = state.offers.findIndex((offer)=>offer.id === id);
+      state.offers[index].isFavorite = action.payload.isFavorite;
+    },
   },
 });
 
-export const {loadOffers, loadOffer, loadComments, changeCommentSendingStatus, loadNearby} = dataProcess.actions;
+export const {loadOffers, loadOffer, loadComments, changeCommentSendingStatus, loadNearby, loadFavorites, updateFavoriteOffer} = dataProcess.actions;
