@@ -1,4 +1,5 @@
 import Comment from '../../types/comment';
+import { formatDate } from '../../utils';
 
 type ReviewsItemProps = {
   comment: Comment
@@ -34,7 +35,7 @@ function ReviewsItem({ comment }: ReviewsItemProps): JSX.Element {
         <p className="reviews__text">
           {comment.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{comment.date}</time>
+        <time className="reviews__time" dateTime="2019-04-24">{formatDate(comment.date)}</time>
       </div>
     </li>
   );
