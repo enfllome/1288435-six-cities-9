@@ -1,6 +1,19 @@
+
+import { LOCATIONS } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
+import { fetchFavoriteOffersAction } from '../../store/api-actions';
+import { getFavoriteOffers } from '../../store/selectors';
+import FavoritesItem from '../favorites-item/favorites-item';
 import Header from '../header/header';
+import Logo from '../logo/logo';
 
 function Favorites (): JSX.Element {
+
+  store.dispatch(fetchFavoriteOffersAction);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
+  // eslint-disable-next-line no-console
+  console.log(favoriteOffers);
   return (
     <>
       <Header />
@@ -9,26 +22,14 @@ function Favorites (): JSX.Element {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                <div className="favorites__places">
-                  {/* {
-                    offers.map((offer) => (
-                      <FavoritesItem key={offer.id} {...offer} />
-                    ))
-                  } */}
-                </div>
-              </li>
+              {LOCATIONS.map((city) => (<FavoritesItem key={city} favoriteOffers={favoriteOffers} city={city} />))}
             </ul>
           </section>
         </div>
       </main>
+      <footer className="footer container">
+        <Logo width='64' height='33'/>
+      </footer>
     </>
   );
 }
