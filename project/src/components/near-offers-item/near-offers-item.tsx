@@ -1,23 +1,17 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Offer from '../../types/offers';
+import { calculateRating } from '../../utils';
 
 type NearOffersItemProps = {
   offer: Offer,
-  updateData: (id: number) => void,
 }
 
-function NearOffersItem ({ offer, updateData }: NearOffersItemProps): JSX.Element {
-  const { price, title, type, previewImage, id } = offer;
-
-  const handleMouseOver = () => {
-    updateData(id);
-  };
-
-  const ratingProcent = (offer.rating / 5) * 100;
+function NearOffersItem ({ offer }: NearOffersItemProps): JSX.Element {
+  const { price, title, type, previewImage, id, rating } = offer;
 
   return (
-    <article className="near-places__card place-card" onMouseOver={handleMouseOver}>
+    <article className="near-places__card place-card">
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
@@ -42,7 +36,7 @@ function NearOffersItem ({ offer, updateData }: NearOffersItemProps): JSX.Elemen
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{
-              'width': `${ratingProcent}%`,
+              'width': `${calculateRating(rating)}%`,
             }}
             >
             </span>

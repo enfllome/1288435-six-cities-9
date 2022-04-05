@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus, CommentSendingStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { errorHandle } from '../services/error-handle';
 import { dropToken, saveToken } from '../services/token';
 import { api, store } from '../store';
@@ -8,7 +8,10 @@ import Comment from '../types/comment';
 import { CommentData } from '../types/comment-data';
 import Offer from '../types/offers';
 import { UserData } from '../types/user-data';
-import { loadComments, loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError } from './action';
+import { redirectToRoute } from './action';
+import { setError } from './reducers/another-process/another-process';
+import { changeCommentSendingStatus, loadComments, loadNearby, loadOffer, loadOffers } from './reducers/data-process/data-process';
+import { requireAuthorization } from './reducers/user-process/user-process';
 
 export const clearErrorAction = createAsyncThunk(
   'main/clearError',
@@ -38,6 +41,18 @@ export const fetchOfferAction = createAsyncThunk(
     try {
       const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
       store.dispatch(loadOffer(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchNearbyOffersAction = createAsyncThunk(
+  'data/fetchNearbyOffer',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
+      store.dispatch(loadNearby(data));
     } catch (error) {
       errorHandle(error);
     }
@@ -103,8 +118,10 @@ export const commentAction = createAsyncThunk(
     try {
       await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
       store.dispatch(fetchCommentsAction(id));
+      store.dispatch(changeCommentSendingStatus(CommentSendingStatus.Sent));
     } catch (error) {
       errorHandle(error);
+      store.dispatch(changeCommentSendingStatus(CommentSendingStatus.Error));
     }
   },
 );

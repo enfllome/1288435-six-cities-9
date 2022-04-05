@@ -8,25 +8,24 @@ import NearOffersList from '../near-offers-list/near-offers-list';
 import { CityName } from '../../types/city-name';
 import GoodsList from '../goods-list/goods-list';
 import Host from '../host/host';
-import { getAutorizationStatus } from '../../store/selectors';
+import { getAutorizationStatus, getCurrentOffer } from '../../store/selectors';
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
+import PropertyGallery from '../property-gallery/property-gallery';
+import { calculateRating } from '../../utils';
 
 type PropertyProps = {
   offer: Offer,
-  offers: Array<Offer>,
+  nearbyOffers: Array<Offer>,
   comments: Array<Comment>,
   city: CityName,
 }
 
-function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Element {
+function Property ({ offer, comments, nearbyOffers, city }: PropertyProps): JSX.Element {
   const {rating, images, isPremium, title, type, bedrooms, maxAdults, price, goods, host, description, id} = offer;
 
-  const ratingProcent = (rating / 5) * 100;
-
-  const sliceImages = images.slice(0, 6);
-
   const autorizationStatus = useAppSelector(getAutorizationStatus);
+  const currentOffer = useAppSelector(getCurrentOffer(id));
 
   return (
     <div className="page">
@@ -35,13 +34,7 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {
-                sliceImages.map((img, idx) => (
-                  <div key={`${idx + img}`} className="property__image-wrapper">
-                    <img className="property__image" src={img} alt="Photos studio" />
-                  </div>
-                ))
-              }
+              <PropertyGallery images={images}/>
             </div>
           </div>
           <div className="property__container container">
@@ -66,7 +59,7 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
                   <span style={{
-                    'width': `${ratingProcent}%`,
+                    'width': `${calculateRating(rating)}%`,
                   }}
                   >
                   </span>
@@ -108,12 +101,12 @@ function Property ({ offer, comments, offers, city }: PropertyProps): JSX.Elemen
               </section>
             </div>
           </div>
-          <Map className='property__map map' city={city} points={offers}/>
+          <Map className='property__map map' city={city} points={nearbyOffers} currentOffer={currentOffer} />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearOffersList offers={offers}/>
+            <NearOffersList offers={nearbyOffers}/>
           </section>
         </div>
       </main>

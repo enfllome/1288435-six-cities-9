@@ -1,20 +1,11 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveCity, setSorted } from '../../store/action';
+import { setActiveCity, setSorted } from '../../store/reducers/another-process/another-process';
 import { getCity, getCurrentSorted, getHoveredOffer, getOffersForSelectCity, getSortOffersByType } from '../../store/selectors';
 import Header from '../header/header';
-import LocationItem from '../location-item/location-item';
+import LocationList from '../location-list/location-list';
 import Map from '../map/map';
 import OffersList from '../offers-list/offers-list';
 import Sorted from '../sorted/sorted';
-
-const Locations: string[] = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf',
-];
 
 function Main(): JSX.Element {
   const activeCity = useAppSelector(getCity);
@@ -34,13 +25,7 @@ function Main(): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              {
-                Locations.map((cityName) => (
-                  <LocationItem key={cityName} name={cityName} active={activeCity === cityName} handleClickCity={handleClickCity} />
-                ))
-              }
-            </ul>
+            <LocationList activeCity={activeCity}  handleClickCity={handleClickCity}/>
           </section>
         </div>
         <div className="cities">

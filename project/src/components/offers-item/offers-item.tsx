@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Offer from '../../types/offers';
+import { calculateRating } from '../../utils';
 
 type OfferItemProps = {
   offer: Offer,
@@ -8,7 +9,7 @@ type OfferItemProps = {
 }
 
 function OfferItem ({ offer, setCurrentOffer }: OfferItemProps): JSX.Element {
-  const { price, title, type, previewImage, id } = offer;
+  const { price, title, type, previewImage, id, isPremium, rating } = offer;
 
   const handleMouseOver = () => {
     setCurrentOffer(offer);
@@ -18,13 +19,14 @@ function OfferItem ({ offer, setCurrentOffer }: OfferItemProps): JSX.Element {
     setCurrentOffer(null);
   };
 
-  const ratingProcent = (offer.rating / 5) * 100;
-
   return (
     <article className="cities__place-card place-card" onMouseLeave={handleMouseLeave} onMouseOver={handleMouseOver}>
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
+      {
+        isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      }
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.Room}/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
@@ -46,7 +48,7 @@ function OfferItem ({ offer, setCurrentOffer }: OfferItemProps): JSX.Element {
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{
-              'width': `${ratingProcent}%`,
+              'width': `${calculateRating(rating)}%`,
             }}
             >
             </span>
