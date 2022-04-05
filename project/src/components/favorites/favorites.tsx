@@ -1,4 +1,5 @@
-
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { LOCATIONS } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
@@ -9,11 +10,13 @@ import Header from '../header/header';
 import Logo from '../logo/logo';
 
 function Favorites (): JSX.Element {
+  const dispatch = useDispatch();
 
-  store.dispatch(fetchFavoriteOffersAction);
+  useEffect(() => {
+    store.dispatch(fetchFavoriteOffersAction);
+  }, [dispatch]);
+
   const favoriteOffers = useAppSelector(getFavoriteOffers);
-  // eslint-disable-next-line no-console
-  console.log(favoriteOffers);
   return (
     <>
       <Header />
