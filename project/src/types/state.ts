@@ -5,7 +5,8 @@ import { CityName } from './city-name';
 import Comment from './comment';
 
 export type UserProcess = {
-  authorizationStatus: AuthorizationStatus
+  authorizationStatus: AuthorizationStatus,
+  login: string,
 };
 
 export type DataProcess = {
@@ -13,6 +14,7 @@ export type DataProcess = {
   nearbyOffers: Offer[],
   selectedOffer: Offer,
   comments: Comment[],
+  favoriteOffers: Offer[],
   isDataLoaded: boolean,
   isCurrentOfferLoaded: boolean,
   commentSendingStatus: CommentSendingStatus

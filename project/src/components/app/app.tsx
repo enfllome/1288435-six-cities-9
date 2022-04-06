@@ -1,5 +1,5 @@
 import Main from '../main/main';
-import SignIn from '../sign-in/sign-in';
+import Login from '../login/login';
 import Favorites from '../favorites/favorites';
 import {Route, Routes} from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
@@ -42,7 +42,7 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Login}
-          element={<SignIn />}
+          element={<Login />}
         />
         <Route
           path='*'

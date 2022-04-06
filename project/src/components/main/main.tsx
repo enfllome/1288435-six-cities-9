@@ -1,8 +1,9 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setActiveCity, setSorted } from '../../store/reducers/another-process/another-process';
-import { getCity, getCurrentSorted, getHoveredOffer, getOffersForSelectCity, getSortOffersByType } from '../../store/selectors';
+import { getCity, getCurrentSorted, getHoveredOffer, getOffers, getOffersForSelectCity, getSortOffersByType } from '../../store/selectors';
 import Header from '../header/header';
 import LocationList from '../location-list/location-list';
+import MainEmpty from '../main-empty/main-empty';
 import Map from '../map/map';
 import OffersList from '../offers-list/offers-list';
 import Sorted from '../sorted/sorted';
@@ -11,6 +12,7 @@ function Main(): JSX.Element {
   const activeCity = useAppSelector(getCity);
   const dispatch = useAppDispatch();
   const handleClickCity = (name: string) => dispatch(setActiveCity(name));
+  const offers = useAppSelector(getOffers);
   const filteredOffers = useAppSelector(getOffersForSelectCity);
   const currentSorting = useAppSelector(getCurrentSorted);
   const setSorting = (typeSort: string) => {
@@ -18,6 +20,11 @@ function Main(): JSX.Element {
   };
   const sortedOffers = getSortOffersByType(filteredOffers,currentSorting);
   const selectedOffer = useAppSelector(getHoveredOffer);
+
+  if (offers.length === 0) {
+    return <MainEmpty />;
+  }
+
   return (
     <div className="page page--gray page--main">
       <Header />

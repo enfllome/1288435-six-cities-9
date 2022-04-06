@@ -11,6 +11,8 @@ export const getNearbyOffers = ({DATA}: State) => DATA.nearbyOffers;
 
 export const getComments = ({DATA}: State) => DATA.comments;
 
+export const getFavoriteOffers = ({DATA}: State) => DATA.favoriteOffers;
+
 export const getCurrentOffer = (id: number | undefined) => ({DATA}: State) => DATA.offers.find((offer) => offer.id === id);
 
 export const getOffersForSelectCity = ({DATA, ANOTHER}: State) => DATA.offers.filter((elem) =>  elem.city.name === ANOTHER.activeCity);
@@ -42,5 +44,7 @@ export const getAutorizationStatus = ({USER}: State) => USER.authorizationStatus
 export const getError = ({ANOTHER}: State) => ANOTHER.error;
 
 export const getCommentSendingStatus = ({DATA}: State) => DATA.commentSendingStatus;
+
+export const getLogin = ({USER}: State) => USER.login;
 
 

@@ -1,48 +1,38 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { useAppDispatch } from '../../hooks';
 import { changeFavoriteStatus } from '../../store/api-actions';
-import { getAutorizationStatus } from '../../store/selectors';
 import { ChangeFavoriteStatus } from '../../types/change-favorite-status';
 import Offer from '../../types/offers';
 import { calculateRating } from '../../utils';
 
-type NearOffersItemProps = {
-  offer: Offer,
-}
-
-function NearOffersItem ({ offer }: NearOffersItemProps): JSX.Element {
-  const { price, title, type, previewImage, id, rating, isFavorite } = offer;
-
+function FavoritesPlace ({ price, title, type, previewImage, id, rating, isFavorite, isPremium }: Offer): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const authorizationStatus = useAppSelector(getAutorizationStatus);
 
   const isFavoriteStatus = isFavorite ? 'place-card__bookmark-button--active' : '';
 
   const handleChangeStatus = () => {
-    if (authorizationStatus === AuthorizationStatus.Auth) {
-      const statusData: ChangeFavoriteStatus = {
-        id: id,
-        status: Number(!isFavorite),
-      };
-      dispatch(changeFavoriteStatus(statusData));
-    } else {
-      navigate(AppRoute.Login);
-    }
+    const statusData: ChangeFavoriteStatus = {
+      id: id,
+      status: Number(!isFavorite),
+    };
+    dispatch(changeFavoriteStatus(statusData));
   };
 
   return (
-    <article className="near-places__card place-card">
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
-      <div className="near-places__image-wrapper place-card__image-wrapper">
+    <article className="favorites__card place-card">
+      {
+        isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      }
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.Room}/${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
+          <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place" />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{ price }</b>
@@ -52,7 +42,7 @@ function NearOffersItem ({ offer }: NearOffersItemProps): JSX.Element {
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -74,4 +64,4 @@ function NearOffersItem ({ offer }: NearOffersItemProps): JSX.Element {
   );
 }
 
-export default NearOffersItem;
+export default FavoritesPlace;

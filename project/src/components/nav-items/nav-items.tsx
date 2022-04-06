@@ -1,31 +1,18 @@
+
 import { AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { getAutorizationStatus } from '../../store/selectors';
+import SignIn from './sign-in/sign-in';
+import SignOut from './sign-out/sign-out';
 
-type NavItemsProps = {
-  autorizationStatus: AuthorizationStatus
-}
-
-function NavItems ({ autorizationStatus }: NavItemsProps):JSX.Element {
+function NavItems ():JSX.Element {
+  const authorizationStatus = useAppSelector(getAutorizationStatus);
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
         {
-          autorizationStatus === AuthorizationStatus.Auth &&
-            <li className="header__nav-item user">
-              <a className="header__nav-link header__nav-link--profile" href="#">
-                <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-              </a>
-            </li>
+          authorizationStatus !== AuthorizationStatus.Auth ? <SignIn /> : <SignOut/>
         }
-        <li className="header__nav-item">
-          <a className="header__nav-link" href="#">
-            <span className="header__signout">
-              {
-                autorizationStatus === AuthorizationStatus.Auth ? 'Sign out' : 'Sign in'
-              }
-            </span>
-          </a>
-        </li>
       </ul>
     </nav>
   );
