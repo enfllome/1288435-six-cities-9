@@ -9,10 +9,13 @@ import { CityName } from '../../types/city-name';
 import GoodsList from '../goods-list/goods-list';
 import Host from '../host/host';
 import { getAutorizationStatus, getCurrentOffer } from '../../store/selectors';
-import { useAppSelector } from '../../hooks';
-import { AuthorizationStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import PropertyGallery from '../property-gallery/property-gallery';
 import { calculateRating } from '../../utils';
+import { useNavigate } from 'react-router-dom';
+import { ChangeFavoriteStatus } from '../../types/change-favorite-status';
+import { changeFavoriteStatus } from '../../store/api-actions';
 
 type PropertyProps = {
   offer: Offer,
@@ -22,10 +25,27 @@ type PropertyProps = {
 }
 
 function Property ({ offer, comments, nearbyOffers, city }: PropertyProps): JSX.Element {
-  const {rating, images, isPremium, title, type, bedrooms, maxAdults, price, goods, host, description, id} = offer;
+  const {rating, images, isPremium, title, type, bedrooms, maxAdults, price, goods, host, description, id, isFavorite} = offer;
 
   const autorizationStatus = useAppSelector(getAutorizationStatus);
   const currentOffer = useAppSelector(getCurrentOffer(id));
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const isFavoriteStatus = isFavorite ? 'property__bookmark-button--active' : '';
+
+  const handleChangeStatus = () => {
+    if (autorizationStatus === AuthorizationStatus.Auth) {
+      const statusData: ChangeFavoriteStatus = {
+        id: id,
+        status: Number(!isFavorite),
+      };
+      dispatch(changeFavoriteStatus(statusData));
+    } else {
+      navigate(AppRoute.Login);
+    }
+  };
 
   return (
     <div className="page">
@@ -49,7 +69,7 @@ function Property ({ offer, comments, nearbyOffers, city }: PropertyProps): JSX.
                 <h1 className="property__name">
                   { title }
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button className={`property__bookmark-button ${isFavoriteStatus} button`} onClick={handleChangeStatus} type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>

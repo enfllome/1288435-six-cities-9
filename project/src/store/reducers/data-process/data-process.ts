@@ -42,6 +42,20 @@ export const dataProcess = createSlice({
       const {id} = action.payload;
       const index = state.offers.findIndex((offer)=>offer.id === id);
       state.offers[index].isFavorite = action.payload.isFavorite;
+
+      if (state.favoriteOffers.some((item) => item.id === id)) {
+        const favoriteIndex = state.favoriteOffers.findIndex((item) => item.id === id);
+        state.favoriteOffers.splice(favoriteIndex, 1);
+      }
+
+      if (state.nearbyOffers.some((item) => item.id === id)) {
+        const nearbyIndex = state.nearbyOffers.findIndex((item) => item.id === id);
+        state.nearbyOffers[nearbyIndex].isFavorite = action.payload.isFavorite;
+      }
+
+      if (state.selectedOffer.id === id) {
+        state.selectedOffer.isFavorite = action.payload.isFavorite;
+      }
     },
   },
 });

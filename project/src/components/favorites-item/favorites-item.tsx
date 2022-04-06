@@ -7,10 +7,13 @@ type FavoritesItemProps = {
   city: string
 }
 
-function FavoritesItem ({ favoriteOffers, city }: FavoritesItemProps): JSX.Element {
+function FavoritesItem ({ favoriteOffers, city }: FavoritesItemProps): JSX.Element | null {
   const filteredOffers = favoriteOffers.filter((offer) => offer.city.name === city && offer.isFavorite);
 
-  // if (filteredOffers.length === 0) return null;
+  if (filteredOffers.length === 0) {
+    return null;
+  }
+
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
