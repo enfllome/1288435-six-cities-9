@@ -1,4 +1,4 @@
-import { DEFAULT_OFFER, CommentSendingStatus } from './../../../const';
+import { DEFAULT_OFFER, CommentSendingStatus, CheckFaforiteStatus } from './../../../const';
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../../const';
 import { DataProcess } from '../../../types/state';
@@ -12,6 +12,7 @@ const initialState: DataProcess = {
   isDataLoaded: false,
   isCurrentOfferLoaded: false,
   commentSendingStatus: CommentSendingStatus.NotSent,
+  favotieStatus: CheckFaforiteStatus.NotCheck,
 };
 
 export const dataProcess = createSlice({
@@ -38,6 +39,9 @@ export const dataProcess = createSlice({
     loadFavorites: (state, action) => {
       state.favoriteOffers = action.payload;
     },
+    checkFavotireStatus: (state, action) => {
+      state.favotieStatus = action.payload;
+    },
     updateFavoriteOffer: (state, action) => {
       const {id} = action.payload;
       const index = state.offers.findIndex((offer)=>offer.id === id);
@@ -60,4 +64,4 @@ export const dataProcess = createSlice({
   },
 });
 
-export const {loadOffers, loadOffer, loadComments, changeCommentSendingStatus, loadNearby, loadFavorites, updateFavoriteOffer} = dataProcess.actions;
+export const {loadOffers, loadOffer, loadComments, changeCommentSendingStatus, loadNearby, loadFavorites, updateFavoriteOffer, checkFavotireStatus} = dataProcess.actions;

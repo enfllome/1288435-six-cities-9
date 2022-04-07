@@ -1,10 +1,12 @@
 import {useAppSelector} from '../../hooks';
 import { getError } from '../../store/selectors';
-
-function ErrorMessage(): JSX.Element | null {
+type ErrorMessageProps = {
+  children?: React.ReactNode
+}
+function ErrorMessage({children}: ErrorMessageProps): JSX.Element | null {
   const error = useAppSelector(getError);
 
-  if (error) {
+  if (error || children) {
     return (
       <div
         style={{
@@ -17,7 +19,7 @@ function ErrorMessage(): JSX.Element | null {
           borderRadius: '5px',
         }}
       >
-        {error}
+        {error || children}
       </div>
     );
   }

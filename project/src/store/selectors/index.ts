@@ -47,4 +47,6 @@ export const getCommentSendingStatus = ({DATA}: State) => DATA.commentSendingSta
 
 export const getLogin = ({USER}: State) => USER.login;
 
+export const getCheckFavoriteStatus = ({DATA}: State) => DATA.favotieStatus;
+
 

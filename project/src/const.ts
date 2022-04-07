@@ -93,6 +93,12 @@ export enum CommentSendingStatus {
   Error = 'error',
 }
 
+export enum CheckFaforiteStatus {
+  Check = 'check',
+  NotCheck = 'notCheck',
+  Error = 'error',
+}
+
 export const DEFAULT_OFFER = {
   bedrooms: 0,
   city: {
@@ -142,3 +148,5 @@ export enum NameSpace {
   another = 'ANOTHER',
   user = 'USER',
 }
+
+export const PASSWORD_VALID = /([a-z]+[0-9])|([0-9]+[a-z])/gi;

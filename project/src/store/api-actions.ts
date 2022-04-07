@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute, AppRoute, AuthorizationStatus, CommentSendingStatus, TIMEOUT_SHOW_ERROR } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus, CheckFaforiteStatus, CommentSendingStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { errorHandle } from '../services/error-handle';
 import { dropToken, saveToken } from '../services/token';
 import { api, store } from '../store';
@@ -11,7 +11,7 @@ import Offer from '../types/offers';
 import { UserData } from '../types/user-data';
 import { redirectToRoute } from './action';
 import { setError } from './reducers/another-process/another-process';
-import { changeCommentSendingStatus, loadComments, loadFavorites, loadNearby, loadOffer, loadOffers, updateFavoriteOffer } from './reducers/data-process/data-process';
+import { changeCommentSendingStatus, checkFavotireStatus, loadComments, loadFavorites, loadNearby, loadOffer, loadOffers, updateFavoriteOffer } from './reducers/data-process/data-process';
 import { removeLogin, requireAuthorization, setLogin } from './reducers/user-process/user-process';
 
 export const clearErrorAction = createAsyncThunk(
@@ -78,8 +78,10 @@ export const changeFavoriteStatus = createAsyncThunk(
     try {
       const {data} = await api.post(`${APIRoute.Favorite}/${id}/${status}`);
       store.dispatch(updateFavoriteOffer(data));
+      store.dispatch(checkFavotireStatus(CheckFaforiteStatus.Check));
     } catch(err){
       errorHandle(err);
+      store.dispatch(checkFavotireStatus(CheckFaforiteStatus.Error));
     }
   },
 );

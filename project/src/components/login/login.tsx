@@ -1,14 +1,23 @@
-import { FormEvent, useRef } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, PASSWORD_VALID } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import Header from '../header/header';
 
 function Login ():JSX.Element {
-  const emailRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [valid, setValid] = useState(false);
+
+  const handleChangeEmail = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    setEmail(target.value);
+  };
+
+  const handleChangePassword = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    setPassword(target.value);
+  };
 
   const dispatch = useAppDispatch();
 
@@ -19,11 +28,15 @@ function Login ():JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (emailRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
-        login: emailRef.current.value,
-        password: passwordRef.current.value,
-      });
+    if (email !== null && password !== null) {
+      if (password.match(PASSWORD_VALID)) {
+        onSubmit({
+          login: email,
+          password: password,
+        });
+      } else {
+        setValid(!valid);
+      }
     }
   };
   return (
@@ -42,10 +55,14 @@ function Login ():JSX.Element {
                   name="email"
                   placeholder="Email"
                   required
-                  ref={emailRef}
+                  value={email}
+                  onChange={handleChangeEmail}
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
+                {
+                  valid && <p style={{color: 'red', fontSize: '14px'}}>Пароль должен содержать букву и цифру</p>
+                }
                 <label className="visually-hidden">Password</label>
                 <input
                   className="login__input form__input"
@@ -53,7 +70,8 @@ function Login ():JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
-                  ref={passwordRef}
+                  value={password}
+                  onChange={handleChangePassword}
                 />
               </div>
               <button

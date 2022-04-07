@@ -1,6 +1,8 @@
+import { CheckFaforiteStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setActiveCity, setSorted } from '../../store/reducers/another-process/another-process';
-import { getCity, getCurrentSorted, getHoveredOffer, getOffers, getOffersForSelectCity, getSortOffersByType } from '../../store/selectors';
+import { getCheckFavoriteStatus, getCity, getCurrentSorted, getHoveredOffer, getOffers, getOffersForSelectCity, getSortOffersByType } from '../../store/selectors';
+import ErrorMessage from '../error-message/error-message';
 import Header from '../header/header';
 import LocationList from '../location-list/location-list';
 import MainEmpty from '../main-empty/main-empty';
@@ -20,6 +22,7 @@ function Main(): JSX.Element {
   };
   const sortedOffers = getSortOffersByType(filteredOffers,currentSorting);
   const selectedOffer = useAppSelector(getHoveredOffer);
+  const favoriteStatus = useAppSelector(getCheckFavoriteStatus);
 
   if (offers.length === 0) {
     return <MainEmpty />;
@@ -37,6 +40,9 @@ function Main(): JSX.Element {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
+            {
+              favoriteStatus === CheckFaforiteStatus.Error && <ErrorMessage>Ошибка соединения</ErrorMessage>
+            }
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{ filteredOffers.length } places to stay in {activeCity}</b>

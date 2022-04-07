@@ -4,10 +4,11 @@ import Star from '../../types/star';
 type ReviewStarProps = {
   star: Star,
   starValue: number,
+  disabledForm: boolean,
   updateData: (value: number) => void,
 }
 
-function ReviewStar ({ star, starValue,  updateData }: ReviewStarProps): JSX.Element {
+function ReviewStar ({ star, starValue, disabledForm, updateData }: ReviewStarProps): JSX.Element {
 
   const handleChangeRating = ({ target }: ChangeEvent<HTMLInputElement>) => {
     updateData(Number(target.value));
@@ -22,6 +23,7 @@ function ReviewStar ({ star, starValue,  updateData }: ReviewStarProps): JSX.Ele
         type="radio"
         onChange={handleChangeRating}
         checked={starValue === star.value}
+        disabled={disabledForm}
       />
       <label htmlFor={star.id} className="reviews__rating-label form__rating-label" title={star.title}>
         <svg className="form__star-image" width="37" height="33">

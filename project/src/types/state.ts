@@ -1,5 +1,5 @@
 import {store} from '../store/index';
-import {AuthorizationStatus, CommentSendingStatus} from '../const';
+import {AuthorizationStatus, CheckFaforiteStatus, CommentSendingStatus} from '../const';
 import Offer from './offers';
 import { CityName } from './city-name';
 import Comment from './comment';
@@ -17,7 +17,8 @@ export type DataProcess = {
   favoriteOffers: Offer[],
   isDataLoaded: boolean,
   isCurrentOfferLoaded: boolean,
-  commentSendingStatus: CommentSendingStatus
+  commentSendingStatus: CommentSendingStatus,
+  favotieStatus: CheckFaforiteStatus,
 }
 
 export type AnotherProcess = {

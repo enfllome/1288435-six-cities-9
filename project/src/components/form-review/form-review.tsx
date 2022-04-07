@@ -44,6 +44,7 @@ const MINIMUM_COMMENT_LENGTH = 50;
 function FormReview ({id}: FormReviewProps): JSX.Element {
   const [review, setReview] = useState('');
   const [stars, setStars] = useState(0);
+  const [disabledForm, setDisabledForm] = useState(false);
 
   const handleChangeField = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
     setReview(target.value);
@@ -63,21 +64,23 @@ function FormReview ({id}: FormReviewProps): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(changeCommentSendingStatus(CommentSendingStatus.NotSent));
 
     if (review !== null && stars !== null) {
+      setDisabledForm(true);
       onSubmit({
         id,
         comment: review,
         rating: stars,
       });
     }
+    dispatch(changeCommentSendingStatus(CommentSendingStatus.NotSent));
   };
 
   useEffect(() => {
     if (commentSendingStatus === CommentSendingStatus.Sent) {
       setReview('');
       setStars(0);
+      setDisabledForm(false);
     }
   }, [commentSendingStatus]);
 
@@ -87,7 +90,7 @@ function FormReview ({id}: FormReviewProps): JSX.Element {
       <div className="reviews__rating-form form__rating">
         {
           starOptions.map((star) => (
-            <ReviewStar key={star.id} updateData={updateData} star={star} starValue={stars} />
+            <ReviewStar key={star.id} updateData={updateData} star={star} starValue={stars} disabledForm={disabledForm} />
           ))
         }
       </div>
@@ -97,11 +100,18 @@ function FormReview ({id}: FormReviewProps): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleChangeField}
         value={review}
+        disabled={disabledForm}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          {
+            commentSendingStatus === CommentSendingStatus.Error &&
+            (
+              <p className="reviews__help" style={{color: 'red'}}>Comment not sent. Please try again.</p>
+            )
+          }
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={!stars || review.length < MINIMUM_COMMENT_LENGTH}>Submit</button>
       </div>
