@@ -41,7 +41,7 @@ function Main(): JSX.Element {
         <div className="cities">
           <div className="cities__places-container container">
             {
-              favoriteStatus === CheckFaforiteStatus.Error && <ErrorMessage>Ошибка соединения</ErrorMessage>
+              favoriteStatus === CheckFaforiteStatus.Error && <ErrorMessage>Ошибка интернет соединения</ErrorMessage>
             }
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
