@@ -12,6 +12,12 @@ function Sorted({ currentSorting, setSorting }: SortedProps): JSX.Element {
   const handleSortClick = () => {
     setIsactive(!isActive);
   };
+
+  const handleSelectSort = (name: string) => {
+    setSorting(name);
+    setIsactive(!isActive);
+  };
+
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by </span>
@@ -30,7 +36,7 @@ function Sorted({ currentSorting, setSorting }: SortedProps): JSX.Element {
               key={name}
               className={`places__option${currentSorting === name ? ' places__option--active' : ''}`}
               tabIndex={0}
-              onClick={() => setSorting(name)}
+              onClick={() => handleSelectSort(name)}
             >
               {title}
             </li>
