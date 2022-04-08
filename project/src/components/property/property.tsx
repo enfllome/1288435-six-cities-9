@@ -2,7 +2,7 @@ import Comment from '../../types/comment';
 import Offer from '../../types/offers';
 import FormReview from '../form-review/form-review';
 import Header from '../header/header';
-import ReviewsList from '../reviews-list/review-list';
+import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import NearOffersList from '../near-offers-list/near-offers-list';
 import { CityName } from '../../types/city-name';

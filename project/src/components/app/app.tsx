@@ -10,7 +10,7 @@ import { useAppSelector } from '../../hooks';
 import { getDataLoaded } from '../../store/selectors';
 import LoadingScreen from '../loading-screen/loading-screen';
 import browserHistory from '../../browser-history';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRoute from '../history-route/history-route';
 
 function App(): JSX.Element {
   const isDataLoaded = useAppSelector(getDataLoaded);
@@ -22,7 +22,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <HistoryRoute history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Root}
@@ -49,7 +49,7 @@ function App(): JSX.Element {
           element={<NotFoundScreen />}
         />
       </Routes>
-    </HistoryRouter>
+    </HistoryRoute>
   );
 }
 
